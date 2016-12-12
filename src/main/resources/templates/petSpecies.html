@@ -9,22 +9,18 @@
             <p>header with links etc</p>
         </header>
         
-        <h2>All pets</h2>
+        <h2>All pet species</h2>
 
         <ul>
-            <li th:each="pet : ${pets}">
-                <span th:text="${pet.name}">name</span> (<span th:text="${pet.petSpecies.name}">species</span>)
+            <li th:each="petSpecies : ${allPetSpecies}">
+                <span th:text="${petSpecies.name}">name</span> 
             </li>
         </ul>
         
         <div>
-            Create a pet:<br/>
-            <form th:action="@{/pets}" method="POST">
+            Add a pet species:<br/>
+            <form th:action="@{/petSpecies}" method="POST">
                 Name: <input type="text" name="name" id="name"/><br/>
-                Species: 
-                <select name="petSpeciesId">
-                    <option th:each="petSpecies : ${allPetSpecies}" th:value="${petSpecies.id}" th:text="${petSpecies.name}"></option>
-                </select>
                 <input type="submit"/>            
             </form>
         </div>

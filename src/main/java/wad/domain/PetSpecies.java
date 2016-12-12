@@ -1,33 +1,25 @@
 package wad.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
 import javax.persistence.FetchType;
-import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 @Entity
-public class User extends AbstractPersistable<Long>  {
+public class PetSpecies extends AbstractPersistable<Long> {
     private String name;
-    private String password;
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
-    private List<Pet> pets;
     
+    @OneToMany(mappedBy = "petSpecies", fetch = FetchType.EAGER)
+    private List<Pet> pets;
+
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public List<Pet> getPets() {
@@ -37,4 +29,13 @@ public class User extends AbstractPersistable<Long>  {
     public void setPets(List<Pet> pets) {
         this.pets = pets;
     }
+    
+    public void addPet(Pet pet){
+        if(this.pets == null){
+            this.pets = new ArrayList<Pet>();
+        }
+        pets.add(pet);
+    }
+    
+    
 }
