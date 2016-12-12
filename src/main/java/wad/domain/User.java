@@ -4,13 +4,15 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.FetchType;
-import javax.persistence.Id;
+import org.hibernate.validator.constraints.Email;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 @Entity
 public class User extends AbstractPersistable<Long>  {
     private String name;
     private String password;
+    @Email
+    private String email;
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<Pet> pets;
     
