@@ -1,0 +1,29 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Petsite</title>
+        <meta charset="UTF-8" />
+    </head>
+    <body>
+        <header th:replace="fragments/header :: header">
+            <p>header with links etc</p>
+        </header>
+        
+        <h2>All pets</h2>
+
+        <ul>
+            <li th:each="pet : ${pets}">
+                <span th:text="${pet.name}">name</span> (<span th:text="${pet.name}">999</span>)
+            </li>
+        </ul>
+        
+        <div>
+            Add a pet:<br/>
+            <form th:action="@{/pets}" method="POST">
+                Name: <input type="text" name="name" id="name"/><br/>
+                <input type="submit"/>            
+            </form>
+        </div>
+        
+    </body>
+</html>

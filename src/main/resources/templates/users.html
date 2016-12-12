@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Petsite</title>
+        <meta charset="UTF-8" />
+    </head>
+    <body>
+        <header th:replace="fragments/header :: header">
+            <p>header with links etc</p>
+        </header>
+        
+        <h2>All users</h2>
+
+        <ul>
+            <li th:each="user : ${users}">
+                <span th:text="${user.name}">name</span> (<span th:text="${user.name}">999</span>)
+            </li>
+        </ul>
+        
+        <div>
+            Add a user:<br/>
+            <form th:action="@{/users}" method="POST">
+                Name: <input type="text" name="name" id="name"/><br/>
+                Password: <input type="password" name="password" id="password"/><br/>
+                <input type="submit"/>            
+            </form>
+        </div>
+        
+    </body>
+</html>

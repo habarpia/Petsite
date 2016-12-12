@@ -1,0 +1,22 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Header template</title>
+    </head>
+    <body>
+
+        <header th:fragment="header">
+            <ul>
+               <li><a th:href="@{/}">Index</a></li>
+               <li><a th:href="@{/users}">Users</a></li>
+               <li><a th:href="@{/pets}">Pets</a></li>
+   <!--              <div sec:authorize="hasAuthority('USER') or hasAuthority('ADMIN')"><li><a th:href="@{/cart}">Cart</a></li></div>
+                <div sec:authorize="hasAuthority('ADMIN')"><li><a th:href="@{/orders}">Orders</a></li></div>
+                <div sec:authorize="hasAuthority('USER') or hasAuthority('ADMIN')"><li><form method="post" action="#" th:action="@{/logout}"><input type="submit" name="logout" value="Logout"/></form></li></div>
+ 
+  -->         </ul>
+        </header>
+
+    </body>
+</html>
