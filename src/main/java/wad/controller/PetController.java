@@ -34,12 +34,17 @@ public class PetController {
 
     @RequestMapping(value = "/pets", method = RequestMethod.POST)
     public String create(@ModelAttribute Pet pet, @RequestParam(value = "petSpeciesId") Long petSpeciesId) {
-        petRepository.save(pet);
-        petService.assignPetSpecies(pet, petSpeciesId);
-        
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
-        petService.assignPetUser(pet, username);
+        
+        petService.save(pet, petSpeciesId, username);
+                
+//        petRepository.save(pet);
+//        petService.assignPetSpecies(pet, petSpeciesId);
+//        
+//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//        String username = auth.getName();
+//        petService.assignPetUser(pet, username);
         
         return "redirect:/pets";
     }

@@ -6,7 +6,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import wad.domain.PetSpecies;
 import wad.domain.User;
+import wad.repository.PetSpeciesRepository;
 import wad.repository.UserRepository;
  
 @Controller
@@ -17,6 +19,9 @@ public class DefaultController {
  
     @Autowired
     private UserRepository userDetailsRepository;
+    
+    @Autowired
+    private PetSpeciesRepository petSpeciesRepository;
  
     @PostConstruct
     public void init() {
@@ -37,6 +42,10 @@ public class DefaultController {
         user2.setPassword(passwordEncoder.encode("bar"));
  
         user2 = userDetailsRepository.save(user2);
+        
+        PetSpecies petSpecies = new PetSpecies();
+        petSpecies.setName("pupu");
+        petSpecies = petSpeciesRepository.save(petSpecies);
     }
  
     @RequestMapping("*")

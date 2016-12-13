@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import wad.domain.Pet;
 import wad.domain.PetSpecies;
 import wad.domain.User;
+import wad.repository.PetRepository;
 import wad.repository.UserRepository;
 import wad.repository.PetSpeciesRepository;
 
@@ -15,9 +16,18 @@ public class PetService {
     private UserRepository userRepository;
     @Autowired
     private PetSpeciesRepository petSpeciesRepository;
+    @Autowired
+    private PetRepository petRepository;
     
     @Transactional
-    public void assignPetUser(Pet pet, String username){
+    public void save(Pet pet, Long petSpeciesId, String username){
+        petRepository.save(pet);
+        assignPetSpecies(pet, petSpeciesId);
+        assignPetUser(pet, username);
+    }
+    
+    @Transactional
+    private void assignPetUser(Pet pet, String username){
         User user = userRepository.findByUsername(username);
         
         user.addPet(pet);
@@ -25,7 +35,7 @@ public class PetService {
     }
     
     @Transactional
-    public void assignPetSpecies(Pet pet, Long petSpeciesId){
+    private void assignPetSpecies(Pet pet, Long petSpeciesId){
         PetSpecies petSpecies = petSpeciesRepository.findOne(petSpeciesId);
         
         pet.setPetSpecies(petSpecies);
