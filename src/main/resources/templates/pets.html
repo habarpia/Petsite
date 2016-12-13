@@ -13,7 +13,7 @@
 
         <ul>
             <li th:each="pet : ${pets}">
-                <span th:text="${pet.name}">name</span> (<span th:text="${pet.petSpecies.name}">species</span>)
+                <span th:text="${pet.name}">name</span> (<span th:text="${pet.petSpecies.name}">species</span>, owner: <span th:text="${pet.user.username}">owner</span>)
             </li>
         </ul>
         

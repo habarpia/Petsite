@@ -1,6 +1,8 @@
 package wad.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -26,6 +28,7 @@ public class PetController {
     public String list(Model model) {
         model.addAttribute("pets", petRepository.findAll());
         model.addAttribute("allPetSpecies", petSpeciesRepository.findAll());
+        
         return "pets";
     }
 
@@ -33,6 +36,11 @@ public class PetController {
     public String create(@ModelAttribute Pet pet, @RequestParam(value = "petSpeciesId") Long petSpeciesId) {
         petRepository.save(pet);
         petService.assignPetSpecies(pet, petSpeciesId);
+        
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();
+        petService.assignPetUser(pet, username);
+        
         return "redirect:/pets";
     }
     

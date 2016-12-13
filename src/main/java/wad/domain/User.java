@@ -1,5 +1,6 @@
 package wad.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
@@ -48,4 +49,10 @@ public class User extends AbstractPersistable<Long>  {
         this.email = email;
     }
     
+    public void addPet(Pet pet){
+        if(this.pets == null){
+            this.pets = new ArrayList<Pet>();
+        }
+        pets.add(pet);
+    }
 }
