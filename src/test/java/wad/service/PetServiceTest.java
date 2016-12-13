@@ -28,25 +28,25 @@ public class PetServiceTest {
     
     @Test
     public void testSavePet() {
-//        User user = new User();
-//        user.setUsername("username");
-//        
-//        PetSpecies petSpecies = new PetSpecies();
-//        petSpecies.setName("pupu");
-//        
-//        Pet pet = new Pet();
-//        pet.setName("Pupuna");
-//        
-//        petSpeciesRepository.save(petSpecies);
-//        userRepository.save(user);
-//        
-//        petService.save(pet, petSpecies.getId(), user.getUsername());
-//
-//        Pet retrieved = petRepository.findOne(pet.getId());
-//
-//        assertNotNull(retrieved);
-//        assertEquals("Pupuna", retrieved.getName());
-//        assertEquals(retrieved.getUser().getId(), user.getId());
-//        assertEquals(retrieved.getPetSpecies().getId(), petSpecies.getId());
+        User user = new User();
+        user.setUsername("username");
+        
+        PetSpecies petSpecies = new PetSpecies();
+        petSpecies.setName("pupu");
+        
+        Pet pet = new Pet();
+        pet.setName("Pupuna");
+        
+        petSpeciesRepository.save(petSpecies);
+        userRepository.save(user);
+        
+        petService.save(pet, petSpecies.getId(), user.getUsername());
+
+        Pet retrieved = petRepository.findOne(pet.getId());
+
+        assertNotNull(retrieved);
+        assertEquals("Pupuna", retrieved.getName());
+        assertEquals(retrieved.getUser().getId(), user.getId());
+        assertEquals(retrieved.getPetSpecies().getId(), petSpecies.getId());
     }
 }
