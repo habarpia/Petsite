@@ -30,6 +30,13 @@ public class DefaultController {
         user.setPassword(passwordEncoder.encode("user"));
  
         user = userDetailsRepository.save(user);
+        
+        User user2 = new User();
+        user2.setUsername("foo");
+        user2.setEmail("foobar@gmail.com");
+        user2.setPassword(passwordEncoder.encode("bar"));
+ 
+        user2 = userDetailsRepository.save(user2);
     }
  
     @RequestMapping("*")

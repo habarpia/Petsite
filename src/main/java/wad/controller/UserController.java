@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import wad.domain.User;
@@ -18,6 +19,16 @@ public class UserController {
     public String list(Model model) {
         model.addAttribute("users", userRepository.findAll());
         return "users";
+    }
+    
+    @RequestMapping("users/{id}")
+    public String getOne(Model model, @PathVariable String id) {
+        if(userRepository.getOne(Long.valueOf(id)) == null) {
+            return "users";
+        }
+
+        model.addAttribute("user", userRepository.getOne(Long.valueOf(id)));
+        return "user";
     }
 
     @RequestMapping(value = "/users", method = RequestMethod.POST)

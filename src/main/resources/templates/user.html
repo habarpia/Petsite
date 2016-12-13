@@ -1,0 +1,23 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Petsite</title>
+        <meta charset="UTF-8" />
+    </head>
+    <body>
+        <header th:replace="fragments/header :: header">
+            <p>header with links etc</p>
+        </header>
+        
+        <h2><span th:text="${user.username}">name</span></h2>
+
+        <h3>Pets</h3>
+
+        <ul>
+            <li th:each="pet : ${user.pets}">
+                <span th:text="${pet.name}">name</span> (<span th:text="${pet.petSpecies.name}">species</span>)
+            </li>
+        </ul>
+        
+    </body>
+</html>

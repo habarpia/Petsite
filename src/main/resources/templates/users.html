@@ -13,7 +13,7 @@
 
         <ul>
             <li th:each="user : ${users}">
-                <span th:text="${user.username}">name</span> (<span th:text="${user.email}">999</span>)
+                <a th:href="@{users/{id}(id=${user.id})}" th:text="${user.username}">username</a>
             </li>
         </ul>
         
