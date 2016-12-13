@@ -13,10 +13,10 @@
                <li><a th:href="@{/pets}">Pets</a></li>
                <li><a th:href="@{/petSpecies}">Pet species</a></li>
    <!--              <div sec:authorize="hasAuthority('USER') or hasAuthority('ADMIN')"><li><a th:href="@{/cart}">Cart</a></li></div>
-                <div sec:authorize="hasAuthority('ADMIN')"><li><a th:href="@{/orders}">Orders</a></li></div>
-                <div sec:authorize="hasAuthority('USER') or hasAuthority('ADMIN')"><li><form method="post" action="#" th:action="@{/logout}"><input type="submit" name="logout" value="Logout"/></form></li></div>
+                 <div sec:authorize="hasAuthority('ADMIN')"><li><a th:href="@{/orders}">Orders</a></li></div>
+               --> <div sec:authorize="hasAuthority('USER') or hasAuthority('ADMIN')"><li><form method="post" action="#" th:action="@{/logout}"><input type="submit" name="logout" value="Logout"/></form></li></div>
  
-  -->         </ul>
+          </ul>
         </header>
 
     </body>

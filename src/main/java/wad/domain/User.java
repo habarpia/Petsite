@@ -9,19 +9,19 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 
 @Entity
 public class User extends AbstractPersistable<Long>  {
-    private String name;
+    private String username;
     private String password;
     @Email
     private String email;
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<Pet> pets;
     
-    public String getName() {
-        return name;
+    public String getUsername() {
+        return username;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -39,4 +39,13 @@ public class User extends AbstractPersistable<Long>  {
     public void setPets(List<Pet> pets) {
         this.pets = pets;
     }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    
 }
