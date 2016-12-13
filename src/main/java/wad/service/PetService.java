@@ -43,6 +43,17 @@ public class PetService {
         petSpecies.addPet(pet);
     }
     
+    @Transactional
+    public void deletePet(Long petId){
+        Pet pet = petRepository.findOne(petId);
+        User user = userRepository.findOne(pet.getUser().getId());
+        PetSpecies petSpecies = petSpeciesRepository.findOne(pet.getPetSpecies().getId());
+        
+        user.removePet(pet);
+        petSpecies.removePet(pet);
+        petRepository.delete(pet);
+    }
+    
     public List<Pet> getPetsByOwner(String username){
         User user = userRepository.findByUsername(username);
                 

@@ -55,4 +55,10 @@ public class User extends AbstractPersistable<Long>  {
         }
         pets.add(pet);
     }
+    
+    public void removePet(Pet pet){
+        if(this.pets != null){
+            pets.remove(pet);
+        }
+    }
 }

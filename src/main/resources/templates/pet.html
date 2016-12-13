@@ -12,6 +12,6 @@
         <h2><span th:text="${pet.name}">name</span></h2>
 
         <h3><span th:text="${pet.petSpecies.name}">pet species</span></h3>
-
+        <form th:action="@{/pets/{id}(id=${pet.id})}" th:method="DELETE"><input type="submit" value="Delete pet"/></form>
     </body>
 </html>

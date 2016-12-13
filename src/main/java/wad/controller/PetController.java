@@ -46,11 +46,20 @@ public class PetController {
     @RequestMapping("pets/{id}")
     public String getOne(Model model, @PathVariable String id) {
         if(petRepository.getOne(Long.valueOf(id)) == null) {
-            return "index";
+            return "redirect:/";
         }
 
         model.addAttribute("pet", petRepository.getOne(Long.valueOf(id)));
         return "pet";
+    }
+    
+    @RequestMapping(value = "pets/{id}", method = RequestMethod.DELETE)
+    public String delete(@PathVariable String id) {
+        if(petRepository.getOne(Long.valueOf(id)) != null) {
+            petService.deletePet(Long.valueOf(id));
+        }
+
+        return "redirect:/pets";
     }
     
 }
