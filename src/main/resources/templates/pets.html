@@ -9,11 +9,11 @@
             <p>header with links etc</p>
         </header>
         
-        <h2>All pets</h2>
+        <h2>Own pets</h2>
 
         <ul>
             <li th:each="pet : ${pets}">
-                <span th:text="${pet.name}">name</span> (<span th:text="${pet.petSpecies.name}">species</span>, owner: <span th:text="${pet.user.username}">owner</span>)
+                <a th:href="@{/pets/{id}(id=${pet.id})}" th:text="${pet.name}">Pet name</a>
             </li>
         </ul>
         

@@ -27,7 +27,7 @@ public class PetServiceTest {
     private PetService petService;
     
     @Test
-    public void testSavePet() {
+    public void lemmikkiTallentuu() {
         User user = new User();
         user.setUsername("username");
         

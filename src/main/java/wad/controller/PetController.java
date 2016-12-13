@@ -6,6 +6,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,7 +27,9 @@ public class PetController {
     
     @RequestMapping(value = "/pets", method = RequestMethod.GET)
     public String list(Model model) {
-        model.addAttribute("pets", petRepository.findAll());
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        
+        model.addAttribute("pets", petService.getPetsByOwner(auth.getName()));
         model.addAttribute("allPetSpecies", petSpeciesRepository.findAll());
         
         return "pets";
@@ -35,18 +38,19 @@ public class PetController {
     @RequestMapping(value = "/pets", method = RequestMethod.POST)
     public String create(@ModelAttribute Pet pet, @RequestParam(value = "petSpeciesId") Long petSpeciesId) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String username = auth.getName();
         
-        petService.save(pet, petSpeciesId, username);
-                
-//        petRepository.save(pet);
-//        petService.assignPetSpecies(pet, petSpeciesId);
-//        
-//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//        String username = auth.getName();
-//        petService.assignPetUser(pet, username);
-        
+        petService.save(pet, petSpeciesId, auth.getName());        
         return "redirect:/pets";
+    }
+    
+    @RequestMapping("pets/{id}")
+    public String getOne(Model model, @PathVariable String id) {
+        if(petRepository.getOne(Long.valueOf(id)) == null) {
+            return "index";
+        }
+
+        model.addAttribute("pet", petRepository.getOne(Long.valueOf(id)));
+        return "pet";
     }
     
 }
