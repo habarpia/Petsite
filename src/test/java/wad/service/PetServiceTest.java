@@ -1,37 +1,37 @@
-package wad.service;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
-import wad.domain.Pet;
-import wad.domain.PetSpecies;
-import wad.domain.User;
-import wad.repository.PetRepository;
-import wad.repository.PetSpeciesRepository;
-import wad.repository.UserRepository;
-
-@RunWith(SpringRunner.class)
-@SpringBootTest
-public class PetServiceTest {
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private PetSpeciesRepository petSpeciesRepository;
-    @Autowired
-    private PetRepository petRepository;
-    @Autowired
-    private PetService petService;
-    
-    private User user;
-    private PetSpecies petSpecies;
-    
+//package wad.service;
+//
+//import static org.junit.Assert.assertEquals;
+//import static org.junit.Assert.assertFalse;
+//import static org.junit.Assert.assertNotNull;
+//import static org.junit.Assert.assertTrue;
+//import org.junit.Before;
+//import org.junit.Test;
+//import org.junit.runner.RunWith;
+//import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.boot.test.context.SpringBootTest;
+//import org.springframework.test.context.junit4.SpringRunner;
+//import wad.domain.Pet;
+//import wad.domain.PetSpecies;
+//import wad.domain.User;
+//import wad.repository.PetRepository;
+//import wad.repository.PetSpeciesRepository;
+//import wad.repository.UserRepository;
+//
+//@RunWith(SpringRunner.class)
+//@SpringBootTest
+//public class PetServiceTest {
+//    @Autowired
+//    private UserRepository userRepository;
+//    @Autowired
+//    private PetSpeciesRepository petSpeciesRepository;
+//    @Autowired
+//    private PetRepository petRepository;
+//    @Autowired
+//    private PetService petService;
+//    
+//    private User user;
+//    private PetSpecies petSpecies;
+//    
 //    @Before
 //    public void initialize() {
 //        user = new User();
@@ -66,4 +66,5 @@ public class PetServiceTest {
 //        assertFalse(retrievedUser.getPets().contains(retrieved));
 //        assertFalse(retrievedSpecies.getPets().contains(retrieved));
 //    }
-}
+//        
+//}

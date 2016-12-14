@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Petsite</title>
+        <meta charset="UTF-8" />
+    </head>
+    <body>
+        <header th:replace="fragments/header :: header">
+            <p>header with links etc</p>
+        </header>
+        
+        <div>
+            Sign up:<br/>
+            <form th:action="@{/users}" th:object="${user}"  method="POST">
+                <table>
+                    <tr>
+                        <td>Username: </td>
+                        <td><input type="text" th:field="*{username}" /></td>
+                        <td th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username error message</td> 
+                    </tr>
+                    <tr>
+                        <td>Email: </td>
+                        <td><input type="text" th:field="*{email}" /></td>
+                        <td th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email error message</td> 
+                    </tr>
+                    <tr>
+                        <td>Password: </td>
+                        <td><input type="password" th:field="*{password}" /></td>
+                        <td th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password error message</td> 
+                    </tr>
+                    <tr>
+                        <td><button type="submit">Submit</button></td>
+                    </tr>         
+                </table>
+            </form>
+        </div>
+        
+    </body>
+</html>
