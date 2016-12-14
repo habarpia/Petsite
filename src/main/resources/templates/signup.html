@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <head>
-        <title>Petsite</title>
+        <title>Petsite - signup</title>
         <meta charset="UTF-8" />
     </head>
     <body>
@@ -15,17 +15,17 @@
                 <table>
                     <tr>
                         <td>Username: </td>
-                        <td><input type="text" th:field="*{username}" /></td>
+                        <td><input type="text" th:field="*{username}" placeholder="Username" /></td>
                         <td th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username error message</td> 
                     </tr>
                     <tr>
                         <td>Email: </td>
-                        <td><input type="text" th:field="*{email}" /></td>
+                        <td><input type="text" th:field="*{email}"  placeholder="Email" /></td>
                         <td th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email error message</td> 
                     </tr>
                     <tr>
                         <td>Password: </td>
-                        <td><input type="password" th:field="*{password}" /></td>
+                        <td><input type="password" th:field="*{password}"  placeholder="password" /></td>
                         <td th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password error message</td> 
                     </tr>
                     <tr>

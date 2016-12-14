@@ -32,13 +32,15 @@ public class DefaultController {
         User user = new User();
         user.setUsername("user");
         user.setEmail("user@gmail.com");
+        user.setSalt("1");
         user.setPassword(passwordEncoder.encode("user"));
- 
+
         user = userDetailsRepository.save(user);
         
         User user2 = new User();
         user2.setUsername("foo");
         user2.setEmail("foobar@gmail.com");
+        user2.setSalt("1");
         user2.setPassword(passwordEncoder.encode("bar"));
  
         user2 = userDetailsRepository.save(user2);

@@ -2,6 +2,7 @@ package wad.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.FetchType;
@@ -9,15 +10,17 @@ import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.data.jpa.domain.AbstractPersistable;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 
 @Entity
 public class User extends AbstractPersistable<Long>  {
     @NotBlank
     @Length(min = 1, max = 20)
+    @Column(unique = true)
     private String username;
     @NotBlank
-    //@Length(min = 5, max = 20)
     private String password;
+    private String salt;
     @NotBlank
     @Email
     private String email;
@@ -38,7 +41,16 @@ public class User extends AbstractPersistable<Long>  {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.salt = BCrypt.gensalt();
+        this.password = BCrypt.hashpw(password, this.salt);
+    }
+    
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
     }
 
     public List<Pet> getPets() {

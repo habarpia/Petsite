@@ -2,6 +2,8 @@ package wad.controller;
 
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -48,7 +50,7 @@ public class UserController {
         if(bindingResult.hasErrors()) {
             return "signup";
         }
-
+        
         userRepository.save(user);
         return "redirect:/users";
     }
