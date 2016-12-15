@@ -4,6 +4,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,6 +19,9 @@ import wad.repository.UserRepository;
 public class UserController {
     @Autowired
     private UserRepository userRepository;
+    
+     @Autowired
+    private PasswordEncoder passwordEncoder;
     
     @ModelAttribute
     private User getUser() {
@@ -45,12 +49,12 @@ public class UserController {
         return "signup";
     }
 
-    @RequestMapping(value = "/users", method = RequestMethod.POST)
+    @RequestMapping(value = "/signup", method = RequestMethod.POST)
     public String create(@Valid @ModelAttribute User user, BindingResult bindingResult) {
         if(bindingResult.hasErrors()) {
             return "signup";
         }
-        
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
         return "redirect:/login";
     }

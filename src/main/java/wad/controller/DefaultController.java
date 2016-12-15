@@ -32,7 +32,7 @@ public class DefaultController {
         User user = new User();
         user.setUsername("user");
         user.setEmail("user@gmail.com");
-        user.setSalt("1");
+        //user.setSalt("1");
         user.setAuthority("USER");
         user.setPassword(passwordEncoder.encode("user"));
 
@@ -41,7 +41,7 @@ public class DefaultController {
         User user2 = new User();
         user2.setUsername("foo");
         user2.setEmail("foobar@gmail.com");
-        user2.setSalt("1");
+       // user2.setSalt("1");
         user2.setAuthority("ADMIN");
         user2.setPassword(passwordEncoder.encode("bar"));
  
