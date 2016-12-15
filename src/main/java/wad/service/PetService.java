@@ -1,6 +1,7 @@
 package wad.service;
 
 import java.util.List;
+import java.util.Objects;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -44,14 +45,18 @@ public class PetService {
     }
     
     @Transactional
-    public void deletePet(Long petId){
+    public void deletePet(Long petId, String username){
         Pet pet = petRepository.findOne(petId);
-        User user = userRepository.findOne(pet.getUser().getId());
-        PetSpecies petSpecies = petSpeciesRepository.findOne(pet.getPetSpecies().getId());
+        User loggedInUser = userRepository.findByUsername(username);
         
-        user.removePet(pet);
-        petSpecies.removePet(pet);
-        petRepository.delete(pet);
+        if(Objects.equals(pet.getUser().getId(), loggedInUser.getId())){
+            User owner = userRepository.findOne(pet.getUser().getId());
+            PetSpecies petSpecies = petSpeciesRepository.findOne(pet.getPetSpecies().getId());
+
+            owner.removePet(pet);
+            petSpecies.removePet(pet);
+            petRepository.delete(pet);
+        }
     }
     
     public List<Pet> getPetsByOwner(String username){

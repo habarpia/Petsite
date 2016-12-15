@@ -55,8 +55,9 @@ public class PetController {
     
     @RequestMapping(value = "pets/{id}", method = RequestMethod.DELETE)
     public String delete(@PathVariable String id) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if(petRepository.getOne(Long.valueOf(id)) != null) {
-            petService.deletePet(Long.valueOf(id));
+            petService.deletePet(Long.valueOf(id), auth.getName());
         }
 
         return "redirect:/pets";
