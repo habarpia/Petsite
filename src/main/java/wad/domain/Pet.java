@@ -13,6 +13,8 @@ public class Pet extends AbstractPersistable<Long> {
     
     @ManyToOne
     private PetSpecies petSpecies;
+    
+    private int happiness;
 
     public String getName() {
         return name;
@@ -37,5 +39,12 @@ public class Pet extends AbstractPersistable<Long> {
     public void setPetSpecies(PetSpecies petSpecies) {
         this.petSpecies = petSpecies;
     }
-    
+
+    public int getHappiness() {
+        return happiness;
+    }
+
+    public void setHappiness(int happiness) {
+        this.happiness = happiness;
+    }
 }

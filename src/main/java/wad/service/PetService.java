@@ -23,6 +23,7 @@ public class PetService {
     
     @Transactional
     public void save(Pet pet, Long petSpeciesId, String username){
+        pet.setHappiness(0);
         petRepository.save(pet);
         assignPetSpecies(pet, petSpeciesId);
         assignPetUser(pet, username);
