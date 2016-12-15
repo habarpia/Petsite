@@ -27,7 +27,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         
         http.authorizeRequests()
                 .antMatchers("/signup").permitAll()
-                .antMatchers("/users").permitAll()
                 .antMatchers("/h2-console/*").permitAll()
                 .anyRequest().authenticated();
         http.formLogin()
@@ -37,6 +36,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+        
+        auth.inMemoryAuthentication()
+                .withUser("user").password("user").authorities("USER");
+        auth.inMemoryAuthentication()
+                .withUser("foo").password("bar").authorities("ADMIN");
     }
 
     @Bean

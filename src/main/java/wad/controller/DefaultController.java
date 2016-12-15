@@ -33,6 +33,7 @@ public class DefaultController {
         user.setUsername("user");
         user.setEmail("user@gmail.com");
         user.setSalt("1");
+        user.setAuthority("USER");
         user.setPassword(passwordEncoder.encode("user"));
 
         user = userDetailsRepository.save(user);
@@ -41,6 +42,7 @@ public class DefaultController {
         user2.setUsername("foo");
         user2.setEmail("foobar@gmail.com");
         user2.setSalt("1");
+        user2.setAuthority("ADMIN");
         user2.setPassword(passwordEncoder.encode("bar"));
  
         user2 = userDetailsRepository.save(user2);

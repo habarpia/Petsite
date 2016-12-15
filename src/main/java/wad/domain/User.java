@@ -24,6 +24,7 @@ public class User extends AbstractPersistable<Long>  {
     @NotBlank
     @Email
     private String email;
+    private String authority;
     
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<Pet> pets;
@@ -81,4 +82,14 @@ public class User extends AbstractPersistable<Long>  {
             pets.remove(pet);
         }
     }
+
+    public String getAuthority() {
+        return authority;
+    }
+
+    public void setAuthority(String authority) {
+        this.authority = authority;
+    }
+    
+    
 }
