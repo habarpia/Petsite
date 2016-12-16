@@ -45,7 +45,7 @@ public class UserController {
     }
         
     @RequestMapping(value = "signup",method = RequestMethod.GET)
-    public String view() {
+    public String signup() {
         return "signup";
     }
 
@@ -59,4 +59,16 @@ public class UserController {
         return "redirect:/login";
     }
     
+    @RequestMapping(value = "login",method = RequestMethod.GET)
+    public String loginView() {
+        return "login";
+    }
+    
+    @RequestMapping(value = "login",method = RequestMethod.POST)
+    public String login(@Valid @ModelAttribute User user, BindingResult bindingResult) {
+        if(bindingResult.hasErrors()) {
+            return "login";
+        }
+        return "login";
+    }
 }
