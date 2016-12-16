@@ -94,7 +94,7 @@ public class PetServiceTest {
         
         User otherUser = new User();
         otherUser.setUsername("other");
-        otherUser.setEmail("other@gmail.com");
+        otherUser.setEmail("otherowner@gmail.com");
         otherUser.setPassword("password");
         
         PetSpecies petSpecies = new PetSpecies();
@@ -121,12 +121,12 @@ public class PetServiceTest {
     public void kaikkiOmistajanLemmikitPalautetaan(){
         User user = new User();
         user.setUsername("correctOwner");
-        user.setEmail("owner@gmail.com");
+        user.setEmail("owner@owner.com");
         user.setPassword("password");
         
         User otherUser = new User();
         otherUser.setUsername("otherOwner");
-        otherUser.setEmail("other@gmail.com");
+        otherUser.setEmail("other@other.com");
         otherUser.setPassword("password");
         
         PetSpecies petSpecies = new PetSpecies();

@@ -51,10 +51,19 @@ public class UserController {
 
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
     public String create(@Valid @ModelAttribute User user, BindingResult bindingResult) {
+        if(userRepository.findByUsername(user.getUsername()) != null) {
+            bindingResult.rejectValue("username", "error.user", "An account already exists for this username.");
+            return "signup";
+        }
+        if(userRepository.findByEmail(user.getEmail()) != null) {
+            bindingResult.rejectValue("email", "error.email", "An account already exists for this email.");
+            return "signup";
+        }
         if(bindingResult.hasErrors()) {
             return "signup";
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.addAuthority("USER");
         userRepository.save(user);
         return "redirect:/login";
     }

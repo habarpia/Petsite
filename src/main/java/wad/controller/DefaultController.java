@@ -1,5 +1,6 @@
 package wad.controller;
  
+import java.util.Arrays;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -32,8 +33,7 @@ public class DefaultController {
         User user = new User();
         user.setUsername("user");
         user.setEmail("user@gmail.com");
-        //user.setSalt("1");
-        user.setAuthority("USER");
+        user.setAuthorities(Arrays.asList("USER"));
         user.setPassword(passwordEncoder.encode("user"));
 
         user = userDetailsRepository.save(user);
@@ -41,8 +41,7 @@ public class DefaultController {
         User user2 = new User();
         user2.setUsername("foo");
         user2.setEmail("foobar@gmail.com");
-       // user2.setSalt("1");
-        user2.setAuthority("ADMIN");
+        user2.setAuthorities(Arrays.asList("USER","ADMIN"));
         user2.setPassword(passwordEncoder.encode("bar"));
  
         user2 = userDetailsRepository.save(user2);

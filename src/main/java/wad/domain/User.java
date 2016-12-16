@@ -3,6 +3,7 @@ package wad.domain;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.FetchType;
@@ -23,8 +24,11 @@ public class User extends AbstractPersistable<Long>  {
     private String salt;
     @NotBlank
     @Email
+    @Column(unique = true)
     private String email;
-    private String authority;
+    
+    @ElementCollection()
+    private List<String> authorities;
     
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<Pet> pets;
@@ -82,14 +86,19 @@ public class User extends AbstractPersistable<Long>  {
             pets.remove(pet);
         }
     }
-
-    public String getAuthority() {
-        return authority;
+    public List<String> getAuthorities() {
+        return authorities;
     }
-
-    public void setAuthority(String authority) {
-        this.authority = authority;
-    }
+ 
+    public void setAuthorities(List<String> authorities) {
+        this.authorities = authorities;
+    } 
     
+    public void addAuthority(String authority){
+        if(this.authorities == null){
+            this.authorities = new ArrayList<String>();
+        }
+        authorities.add(authority);
+    }
     
 }
