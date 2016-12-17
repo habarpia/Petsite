@@ -151,5 +151,29 @@ public class PetServiceTest {
         assertTrue(retrieved.contains(petRepository.findOne(pet.getId())));
         assertTrue(retrieved.contains(petRepository.findOne(pet2.getId())));
         assertFalse(retrieved.contains(petRepository.findOne(pet3.getId())));
-    }      
+    }  
+
+@Test
+public void lemmikinVoiRuokkia(){
+    User user = new User();
+    user.setUsername("ruokkija");
+    user.setEmail("ruokkija@maili.com");
+    user.setPassword("password");
+    
+    PetSpecies petSpecies = new PetSpecies();
+    petSpecies.setName("pupu");
+
+    petSpeciesRepository.save(petSpecies);
+    userRepository.save(user);
+    
+    Pet pet = new Pet();
+    pet.setName("Pupuna");
+    
+    petService.save(pet, petSpecies.getId(), user.getUsername());
+    petService.feedPet(pet.getId(), user.getUsername());
+    
+    Pet retrieved = petRepository.findOne(pet.getId());
+    assertEquals(retrieved.getFullness(), 1);
+    assertEquals(retrieved.getHappiness(), 1);
+}
 }

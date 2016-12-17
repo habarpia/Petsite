@@ -67,4 +67,43 @@ public class PetService {
                 
         return user.getPets();
     }
+    
+    public String feedPet(Long petId, String username){
+        Pet pet = petRepository.findOne(petId);
+        if(pet == null){
+            return "Pet doesn't exist!";
+        }
+        User loggedInUser = userRepository.findByUsername(username);
+        
+        if(!Objects.equals(pet.getUser().getId(), loggedInUser.getId())){
+            return "You can only feed your own pet!";
+        }
+        pet.setFullness(calculateHunger(pet));
+        if(pet.getFullness() >= 10){
+            return pet.getName() + " is already totally full!";
+        }
+        if(pet.getHappiness() <= 200){
+            pet.setHappiness(pet.getHappiness() + 1);
+            pet.setFullness(pet.getFullness() + 1);
+            pet.setLastFed(new Timestamp(new Date().getTime()));
+            petRepository.save(pet);
+        }
+        return "You fed " + pet.getName() + "!";
+        
+    }
+
+    //kylläisyys laskee joka viides minuutti
+    private int calculateHunger(Pet pet){
+        Timestamp lastFed = pet.getLastFed();
+        Timestamp now = new Timestamp(new Date().getTime());
+        int fullness = pet.getFullness();
+        
+        long diff = now.getTime() - lastFed.getTime();
+        
+        while(diff > 300000 && fullness > 0){
+            diff = diff - 300000;
+            fullness --;
+        }
+        return fullness;
+    }
 }

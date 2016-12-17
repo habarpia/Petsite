@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import java.sql.Timestamp;
-import java.util.Date;
+//import java.sql.Timestamp;
+//import java.util.Date;
 import wad.domain.Pet;
 import wad.repository.PetRepository;
 import wad.repository.PetSpeciesRepository;
@@ -67,37 +67,40 @@ public class PetController {
     
     @RequestMapping(value = "feedpet/{id}", method = RequestMethod.POST)
     public String feed(Model model, @PathVariable String id, RedirectAttributes redirectAttrs) {
-        Pet pet = petRepository.getOne(Long.valueOf(id));
-        if(pet != null) {
-            pet.setFullness(calculateHunger(pet));
-            if(pet.getFullness() >= 10){
-                redirectAttrs.addFlashAttribute("actiontext", pet.getName() + " is already totally full!");
-            }
-            else{
-                if(pet.getHappiness() <= 200){
-                    pet.setHappiness(pet.getHappiness() + 1);
-                    pet.setFullness(pet.getFullness() + 1);
-                    pet.setLastFed(new Timestamp(new Date().getTime()));
-                    petRepository.save(pet);
-                }
-                redirectAttrs.addFlashAttribute("actiontext", "You fed " + pet.getName() + "!");
-            }
-        }
+//        Pet pet = petRepository.getOne(Long.valueOf(id));
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String actiontext = petService.feedPet(Long.valueOf(id), auth.getName());
+//        if(pet != null) {
+//            pet.setFullness(calculateHunger(pet));
+//            if(pet.getFullness() >= 10){
+//                redirectAttrs.addFlashAttribute("actiontext", pet.getName() + " is already totally full!");
+//            }
+//            else{
+//                if(pet.getHappiness() <= 200){
+//                    pet.setHappiness(pet.getHappiness() + 1);
+//                    pet.setFullness(pet.getFullness() + 1);
+//                    pet.setLastFed(new Timestamp(new Date().getTime()));
+//                    petRepository.save(pet);
+//                }
+//                redirectAttrs.addFlashAttribute("actiontext", "You fed " + pet.getName() + "!");
+//            }
+//        }
+        redirectAttrs.addFlashAttribute("actiontext", actiontext);
         return "redirect:/pets/{id}";
     }
     
     //kylläisyys laskee joka viides minuutti
-    private int calculateHunger(Pet pet){
-        Timestamp lastFed = pet.getLastFed();
-        Timestamp now = new Timestamp(new Date().getTime());
-        int fullness = pet.getFullness();
-        
-        long diff = now.getTime() - lastFed.getTime();
-        
-        while(diff > 300000 && fullness > 0){
-            diff = diff - 300000;
-            fullness --;
-        }
-        return fullness;
-    }
+//    private int calculateHunger(Pet pet){
+//        Timestamp lastFed = pet.getLastFed();
+//        Timestamp now = new Timestamp(new Date().getTime());
+//        int fullness = pet.getFullness();
+//        
+//        long diff = now.getTime() - lastFed.getTime();
+//        
+//        while(diff > 300000 && fullness > 0){
+//            diff = diff - 300000;
+//            fullness --;
+//        }
+//        return fullness;
+//    }
 }
