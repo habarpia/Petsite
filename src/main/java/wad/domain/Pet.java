@@ -1,5 +1,6 @@
 package wad.domain;
 
+import java.sql.Timestamp;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import org.springframework.data.jpa.domain.AbstractPersistable;
@@ -15,6 +16,8 @@ public class Pet extends AbstractPersistable<Long> {
     private PetSpecies petSpecies;
     
     private int happiness;
+    private int fullness;
+    private Timestamp lastFed;
 
     public String getName() {
         return name;
@@ -46,5 +49,21 @@ public class Pet extends AbstractPersistable<Long> {
 
     public void setHappiness(int happiness) {
         this.happiness = happiness;
+    }
+
+    public int getFullness() {
+        return fullness;
+    }
+
+    public void setFullness(int fullness) {
+        this.fullness = fullness;
+    }
+
+    public Timestamp getLastFed() {
+        return lastFed;
+    }
+
+    public void setLastFed(Timestamp lastFed) {
+        this.lastFed = lastFed;
     }
 }

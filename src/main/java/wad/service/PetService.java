@@ -1,5 +1,7 @@
 package wad.service;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +25,7 @@ public class PetService {
     
     @Transactional
     public void save(Pet pet, Long petSpeciesId, String username){
-        pet.setHappiness(0);
+        pet.setLastFed(new Timestamp(new Date().getTime()));
         petRepository.save(pet);
         assignPetSpecies(pet, petSpeciesId);
         assignPetUser(pet, username);

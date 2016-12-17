@@ -12,6 +12,13 @@
         <h2><span th:text="${pet.name}">name</span></h2>
 
         <h3><span th:text="${pet.petSpecies.name}">pet species</span></h3>
+        
+        <h4><span th:text="${actiontext}">action text</span></h4>
+        
+        
+        <h4>Happiness: <span th:text="${pet.happiness}">happiness</span></h4>
+        <form th:action="@{/feedpet/{id}(id=${pet.id})}" th:method="POST"><input type="submit" value="Feed"/></form>
+
         <form th:action="@{/pets/{id}(id=${pet.id})}" th:method="DELETE"><input type="submit" value="Delete pet"/></form>
     </body>
 </html>
