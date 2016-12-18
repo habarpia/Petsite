@@ -36,4 +36,9 @@ public class Item  extends AbstractPersistable<Long> {
         }
         items.add(inventoryItem);
     }
+    public void removeItem(InventoryItem item){
+        if(this.items != null && this.items.contains(item)){
+            items.remove(item);
+        }
+    }
 }

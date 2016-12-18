@@ -11,9 +11,13 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import wad.domain.InventoryItem;
+import wad.domain.Item;
 import wad.domain.Pet;
 import wad.domain.PetSpecies;
 import wad.domain.User;
+import wad.repository.InventoryItemRepository;
+import wad.repository.ItemRepository;
 import wad.repository.PetRepository;
 import wad.repository.PetSpeciesRepository;
 import wad.repository.UserRepository;
@@ -28,7 +32,13 @@ public class PetServiceTest {
     @Autowired
     private PetRepository petRepository;
     @Autowired
+    private ItemRepository itemRepository;
+    @Autowired
+    private InventoryItemRepository inventoryItemRepository;
+    @Autowired
     private PetService petService;
+    @Autowired
+    private ItemService itemService;
     
     @Test
     public void lemmikkiTallentuu() {
@@ -162,15 +172,28 @@ public void lemmikinVoiRuokkia(){
     
     PetSpecies petSpecies = new PetSpecies();
     petSpecies.setName("pupu");
+    
+    Item item = new Item();
+    item.setName("Päärynä");
+    InventoryItem inventoryItem = new InventoryItem();
+    inventoryItem.setItem(item);
+    inventoryItem.setUser(user);
+    user.addItem(inventoryItem);
+    item.addItem(inventoryItem);
 
     petSpeciesRepository.save(petSpecies);
     userRepository.save(user);
+    itemRepository.save(item);
+    inventoryItemRepository.save(inventoryItem);
     
     Pet pet = new Pet();
     pet.setName("Pupuna");
     
     petService.save(pet, petSpecies.getId(), user.getUsername());
-    petService.feedPet(pet.getId(), user.getUsername());
+    
+   // InventoryItem retrieved = inventoryItemRepository.findOne(inventoryItem.getId());
+    
+    petService.feedPet(pet.getId(), user.getUsername(), inventoryItem.getId());
     
     Pet retrieved = petRepository.findOne(pet.getId());
     assertEquals(retrieved.getFullness(), 1);

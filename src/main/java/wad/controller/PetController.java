@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import wad.domain.Pet;
+import wad.domain.User;
+import wad.repository.InventoryItemRepository;
+import wad.repository.UserRepository;
 import wad.repository.PetRepository;
 import wad.repository.PetSpeciesRepository;
 import wad.service.PetService;
@@ -22,6 +25,10 @@ public class PetController {
     private PetRepository petRepository;
     @Autowired
     private PetSpeciesRepository petSpeciesRepository;
+    @Autowired
+    private InventoryItemRepository inventoryItemRepository;
+    @Autowired
+    private UserRepository userRepository;
     @Autowired
     private PetService petService;
     
@@ -48,7 +55,9 @@ public class PetController {
         if(petRepository.getOne(Long.valueOf(id)) == null) {
             return "redirect:/";
         }
-
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userRepository.findByUsername(auth.getName());
+        model.addAttribute("items", inventoryItemRepository.findByUser(user));
         model.addAttribute("pet", petRepository.getOne(Long.valueOf(id)));
         return "pet";
     }
@@ -64,9 +73,9 @@ public class PetController {
     }
     
     @RequestMapping(value = "feedpet/{id}", method = RequestMethod.POST)
-    public String feed(Model model, @PathVariable String id, RedirectAttributes redirectAttrs) {
+    public String feed(Model model, @PathVariable String id, @RequestParam(value = "itemId") String itemId, RedirectAttributes redirectAttrs) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String actiontext = petService.feedPet(Long.valueOf(id), auth.getName());
+        String actiontext = petService.feedPet(Long.valueOf(id), auth.getName(), Long.valueOf(itemId));
 
         redirectAttrs.addFlashAttribute("actiontext", actiontext);
         return "redirect:/pets/{id}";

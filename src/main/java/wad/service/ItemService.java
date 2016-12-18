@@ -42,6 +42,20 @@ public class ItemService {
         return item.getName() + " obtained!";
     }
     
+    @Transactional
+    public void removeInventoryItem(Long id){
+        InventoryItem inventoryItem = inventoryItemRepository.findOne(id);
+        User user = userRepository.findOne(inventoryItem.getUser().getId());
+        Item item = itemRepository.findOne(inventoryItem.getItem().getId());
+        
+        user.removeItem(inventoryItem);
+        item.removeItem(inventoryItem);
+        
+        inventoryItemRepository.delete(inventoryItem);
+        user = userRepository.save(user);
+        item = itemRepository.save(item);
+    }
+    
     private Item getRandomItem(){
         if(randomGenerator ==null){
             randomGenerator = new Random();

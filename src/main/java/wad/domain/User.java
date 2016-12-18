@@ -120,7 +120,7 @@ public class User extends AbstractPersistable<Long>  {
     }
     
     public void removeItem(InventoryItem item){
-        if(this.items != null){
+        if(this.items != null && this.items.contains(item)){
             items.remove(item);
         }
     }

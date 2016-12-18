@@ -22,6 +22,8 @@ public class PetService {
     private PetSpeciesRepository petSpeciesRepository;
     @Autowired
     private PetRepository petRepository;
+    @Autowired
+    private ItemService itemService;
     
     @Transactional
     public void save(Pet pet, Long petSpeciesId, String username){
@@ -68,7 +70,7 @@ public class PetService {
         return user.getPets();
     }
     
-    public String feedPet(Long petId, String username){
+    public String feedPet(Long petId, String username, Long itemId){
         Pet pet = petRepository.findOne(petId);
         if(pet == null){
             return "Pet doesn't exist!";
@@ -88,6 +90,7 @@ public class PetService {
             pet.setLastFed(new Timestamp(new Date().getTime()));
             petRepository.save(pet);
         }
+        itemService.removeInventoryItem(itemId);
         return "You fed " + pet.getName() + "!";
         
     }
