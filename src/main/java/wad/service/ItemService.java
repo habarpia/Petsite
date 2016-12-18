@@ -23,10 +23,10 @@ public class ItemService {
     private Random randomGenerator;
     
     @Transactional
-    public void getRandomItems(String username){
+    public String getRandomItems(String username){
         User user = userRepository.findByUsername(username);
         if(user.getItems().size() >= 20){
-            return;
+            return "Your inventory is already full!";
         }
         Item item = getRandomItem();
         
@@ -38,6 +38,8 @@ public class ItemService {
         user.addItem(inventoryItem);
         userRepository.save(user);
         itemRepository.save(item);
+        
+        return item.getName() + " obtained!";
     }
     
     private Item getRandomItem(){

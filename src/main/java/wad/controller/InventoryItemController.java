@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import wad.domain.InventoryItem;
 import wad.domain.Item;
 import wad.domain.User;
@@ -39,21 +40,11 @@ public class InventoryItemController {
     }
     
     @RequestMapping(value = "/itemGet", method = RequestMethod.POST)
-    public String getRandomItems() {
+    public String getRandomItems(RedirectAttributes redirectAttrs) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        itemService.getRandomItems(auth.getName());
-//        User user = userRepository.findByUsername(auth.getName());
-//        Item item = itemRepository.findOne(Long.valueOf(1));
-//        
-//        InventoryItem inventoryItem = new InventoryItem();
-//        inventoryItem.setItem(item);
-//        inventoryItem.setUser(user);
-//        inventoryItemRepository.save(inventoryItem);
-//        item.addItem(inventoryItem);
-//        user.addItem(inventoryItem);
-//        userRepository.save(user);
-//        itemRepository.save(item);
+        String actiontext = itemService.getRandomItems(auth.getName());
         
+        redirectAttrs.addFlashAttribute("actiontext", actiontext);
         return "redirect:/inventory";
     }
 }

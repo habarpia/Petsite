@@ -9,6 +9,8 @@
             <p>header with links etc</p>
         </header>
         
+        <h4><span th:text="${actiontext}">action text</span></h4>
+        
         <ul>
             <li th:each="item : ${items}">
                 <span th:text="${item.item.name}">name</span>
@@ -17,7 +19,7 @@
         
         <div>
             <form th:action="@{/itemGet}" method="POST">
-                <input type="submit" value="Get items!"/>         
+                <input type="submit" value="Get an item!"/>         
             </form>
         </div>
     </body>
