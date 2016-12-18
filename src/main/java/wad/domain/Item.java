@@ -1,5 +1,6 @@
 package wad.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -27,5 +28,12 @@ public class Item  extends AbstractPersistable<Long> {
 
     public void setItems(List<InventoryItem> items) {
         this.items = items;
+    }
+    
+    public void addItem(InventoryItem inventoryItem){
+        if(this.items == null){
+            this.items = new ArrayList<InventoryItem>();
+        }
+        items.add(inventoryItem);
     }
 }

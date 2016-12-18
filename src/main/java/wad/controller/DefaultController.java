@@ -62,6 +62,10 @@ public class DefaultController {
         Item item2 = new Item();
         item2.setName("Pie");
         item2 = itemRepository.save(item2);
+        
+        Item item3 = new Item();
+        item3.setName("Doughnut");
+        item3 = itemRepository.save(item3);
     }
  
     @RequestMapping("*")
