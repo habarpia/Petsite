@@ -33,6 +33,9 @@ public class User extends AbstractPersistable<Long>  {
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<Pet> pets;
     
+    @OneToMany(mappedBy = "user")
+    private List<Item> items;
+    
     public String getUsername() {
         return username;
     }
@@ -100,5 +103,25 @@ public class User extends AbstractPersistable<Long>  {
         }
         authorities.add(authority);
     }
+
+    public List<Item> getItems() {
+        return items;
+    }
+
+    public void setItems(List<Item> items) {
+        this.items = items;
+    }
     
+    public void addItem(Item item){
+        if(this.items == null){
+            this.items = new ArrayList<Item>();
+        }
+        items.add(item);
+    }
+    
+    public void removeItem(Item item){
+        if(this.items != null){
+            items.remove(item);
+        }
+    }
 }

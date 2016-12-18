@@ -29,17 +29,22 @@
 //    
 //    @Test
 //    public void signupOnnistuu() {
-////        goTo("http://localhost:"+ port + "/signup");
-////        
-////        assertEquals("Petsite - signup", title());
-////                
-////        fill(find("#username")).with("NewUser");
-////        fill(find("#email")).with("example@gmail.com");
-////        fill(find("#password")).with("password");
-////        submit(find("form").first());
-////        
-////        assertEquals("Petsite", title());
-////        
-////        assertTrue(pageSource().contains("NewUser"));
+//        goTo("http://localhost:"+ port + "/signup");
+//        
+//        assertEquals("Petsite - signup", title());
+//                
+//        fill(find("#username")).with("NewUser");
+//        fill(find("#email")).with("example@gmail.com");
+//        fill(find("#password")).with("password");
+//        submit(find("form").first());
+//        
+//        assertEquals("Login Page", title());
+//        
+//        fill(find("#username")).with("NewUser");
+//        fill(find("#password")).with("password");
+//        submit(find("form").first());
+//        
+//        assertEquals("Petsite", title());
+//        assertTrue(pageSource().contains("NewUser"));
 //    }    
 //}
