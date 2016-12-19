@@ -1,5 +1,8 @@
 package wad.service;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
@@ -70,15 +73,22 @@ public class ItemService {
     //lemmikille 2 lempiruokaa ja 2 inhokkiruokaa
     public void setPreferences(Pet pet){
         Set<Item> generatedSet = new HashSet<Item>();
-        while(generatedSet.size() <= 4){
+        while(generatedSet.size() < 4){
             generatedSet.add(getRandomItem());
         }
         Object[] generatedArray = generatedSet.toArray();
+        ArrayList<Object> generatedArrayList = new ArrayList<Object>(Arrays.asList(generatedArray));
+        Collections.shuffle(generatedArrayList);
+        
         int i = 0;
-        while(i < generatedArray.length/2){
-            pet.addLikedItem((Item)generatedArray[i]);
-            pet.addDislikedItem((Item)generatedArray[generatedArray.length-1-i]);
+        while(i < generatedArrayList.size()/2){
+            pet.addLikedItem((Item)generatedArrayList.get(i));
+            pet.addDislikedItem((Item)generatedArrayList.get(generatedArrayList.size()-1-i));
             i++;
         }
+    }
+    
+    public Item getItem(Long id){
+        return itemRepository.findOne(id);
     }
 }

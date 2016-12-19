@@ -7,12 +7,14 @@ import java.util.Objects;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import wad.domain.Item;
 import wad.domain.Pet;
 import wad.domain.PetSpecies;
 import wad.domain.User;
 import wad.repository.PetRepository;
 import wad.repository.UserRepository;
 import wad.repository.PetSpeciesRepository;
+import wad.repository.InventoryItemRepository;
 
 @Service
 public class PetService {
@@ -22,6 +24,8 @@ public class PetService {
     private PetSpeciesRepository petSpeciesRepository;
     @Autowired
     private PetRepository petRepository;
+    @Autowired
+    private InventoryItemRepository inventoryItemRepository;
     @Autowired
     private ItemService itemService;
     
@@ -86,14 +90,12 @@ public class PetService {
         if(pet.getFullness() >= 10){
             return pet.getName() + " is already totally full!";
         }
-        if(pet.getHappiness() <= 200){
-            pet.setHappiness(pet.getHappiness() + 1);
-            pet.setFullness(pet.getFullness() + 1);
-            pet.setLastFed(new Timestamp(new Date().getTime()));
-            petRepository.save(pet);
-        }
+        String message = setHappiness(pet, inventoryItemRepository.findOne(itemId).getItem().getId());
+        pet.setFullness(pet.getFullness() + 1);
+        pet.setLastFed(new Timestamp(new Date().getTime()));
+        petRepository.save(pet);
         itemService.removeInventoryItem(itemId);
-        return "You fed " + pet.getName() + "!";
+        return "You fed " + pet.getName() + "! " + message;
         
     }
 
@@ -110,5 +112,23 @@ public class PetService {
             fullness --;
         }
         return fullness;
+    }
+    
+    private String setHappiness(Pet pet, Long itemId){
+        int changeInHappiness = 1;
+        String message = "";
+        
+        if(pet.getLikedItems().contains(itemService.getItem(itemId))){
+            changeInHappiness = 10;
+            message = "It loved the treat!";
+        }
+        if(pet.getDislikedItems().contains(itemService.getItem(itemId))){
+            changeInHappiness = -10;
+            message = "Looks like it didn't like the food...";
+        }
+        pet.setHappiness(pet.getHappiness() + changeInHappiness);
+        if(pet.getHappiness() > 200) pet.setHappiness(200);
+        if(pet.getHappiness() < -200) pet.setHappiness(-200);
+        return message;
     }
 }
