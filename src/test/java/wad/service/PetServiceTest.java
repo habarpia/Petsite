@@ -1,6 +1,7 @@
 package wad.service;
 
 import java.util.List;
+import org.junit.After;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
@@ -190,9 +191,6 @@ public void lemmikinVoiRuokkia(){
     pet.setName("Pupuna");
     
     petService.save(pet, petSpecies.getId(), user.getUsername());
-    
-   // InventoryItem retrieved = inventoryItemRepository.findOne(inventoryItem.getId());
-    
     petService.feedPet(pet.getId(), user.getUsername(), inventoryItem.getId());
     
     Pet retrieved = petRepository.findOne(pet.getId());

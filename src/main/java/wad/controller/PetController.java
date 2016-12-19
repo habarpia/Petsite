@@ -57,8 +57,9 @@ public class PetController {
         }
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userRepository.findByUsername(auth.getName());
+        Pet pet = petRepository.getOne(Long.valueOf(id));
         model.addAttribute("items", inventoryItemRepository.findByUser(user));
-        model.addAttribute("pet", petRepository.getOne(Long.valueOf(id)));
+        model.addAttribute("pet", pet);
         return "pet";
     }
     
@@ -75,9 +76,9 @@ public class PetController {
     @RequestMapping(value = "feedpet/{id}", method = RequestMethod.POST)
     public String feed(Model model, @PathVariable String id, @RequestParam(value = "itemId") String itemId, RedirectAttributes redirectAttrs) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String actiontext = petService.feedPet(Long.valueOf(id), auth.getName(), Long.valueOf(itemId));
+        String message = petService.feedPet(Long.valueOf(id), auth.getName(), Long.valueOf(itemId));
 
-        redirectAttrs.addFlashAttribute("actiontext", actiontext);
+        redirectAttrs.addFlashAttribute("message", message);
         return "redirect:/pets/{id}";
     }
     

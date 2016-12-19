@@ -13,6 +13,12 @@ public class Item  extends AbstractPersistable<Long> {
     
     @OneToMany(mappedBy = "item", fetch = FetchType.EAGER)
     private List<InventoryItem> items;
+    
+    @OneToMany(mappedBy = "likedItems")
+    private List<Pet> petsWhoLikeThis;
+    
+    @OneToMany(mappedBy = "dislikedItems")
+    private List<Pet> petsWhoDislikeThis;
 
     public String getName() {
         return name;
@@ -40,5 +46,58 @@ public class Item  extends AbstractPersistable<Long> {
         if(this.items != null && this.items.contains(item)){
             items.remove(item);
         }
+    }
+
+    public List<Pet> getPetsWhoLikeThis() {
+        return petsWhoLikeThis;
+    }
+
+    public void setPetsWhoLikeThis(List<Pet> petsWhoLikeThis) {
+        this.petsWhoLikeThis = petsWhoLikeThis;
+    }
+
+    public List<Pet> getPetsWhoDislikeThis() {
+        return petsWhoDislikeThis;
+    }
+
+    public void setPetsWhoDislikeThis(List<Pet> petsWhoDislikeThis) {
+        this.petsWhoDislikeThis = petsWhoDislikeThis;
+    }
+    
+    public void addPetWhoLikesThis(Pet pet){
+        if(this.petsWhoLikeThis == null){
+            this.petsWhoLikeThis = new ArrayList<Pet>();
+        }
+        petsWhoLikeThis.add(pet);
+    }
+    
+    public void removePetWhoLikesThis(Pet pet){
+        if(this.petsWhoLikeThis != null && this.petsWhoLikeThis.contains(pet)){
+            petsWhoLikeThis.remove(pet);
+        }
+    }
+    
+    public void addPetWhoDisikesThis(Pet pet){
+        if(this.petsWhoDislikeThis == null){
+            this.petsWhoDislikeThis = new ArrayList<Pet>();
+        }
+        petsWhoDislikeThis.add(pet);
+    }
+    
+    public void removePetWhoDisikesThis(Pet pet){
+        if(this.petsWhoDislikeThis != null && this.petsWhoDislikeThis.contains(pet)){
+            petsWhoDislikeThis.remove(pet);
+        }
+    }
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Item)){
+            return false;
+        }
+        if (obj == this){
+            return true;
+        }
+        Item newItem = (Item)obj;
+        return newItem.getName().equals(this.name);
     }
 }

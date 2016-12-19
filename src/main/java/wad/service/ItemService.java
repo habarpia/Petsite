@@ -1,12 +1,15 @@
 package wad.service;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import wad.domain.InventoryItem;
 import wad.domain.Item;
+import wad.domain.Pet;
 import wad.domain.User;
 import wad.repository.InventoryItemRepository;
 import wad.repository.ItemRepository;
@@ -62,5 +65,20 @@ public class ItemService {
         }
         List<Item> items = itemRepository.findAll();
         return items.get(randomGenerator.nextInt(items.size()));
+    }
+    
+    //lemmikille 2 lempiruokaa ja 2 inhokkiruokaa
+    public void setPreferences(Pet pet){
+        Set<Item> generatedSet = new HashSet<Item>();
+        while(generatedSet.size() <= 4){
+            generatedSet.add(getRandomItem());
+        }
+        Object[] generatedArray = generatedSet.toArray();
+        int i = 0;
+        while(i < generatedArray.length/2){
+            pet.addLikedItem((Item)generatedArray[i]);
+            pet.addDislikedItem((Item)generatedArray[generatedArray.length-1-i]);
+            i++;
+        }
     }
 }

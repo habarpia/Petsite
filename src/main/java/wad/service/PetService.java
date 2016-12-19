@@ -28,6 +28,8 @@ public class PetService {
     @Transactional
     public void save(Pet pet, Long petSpeciesId, String username){
         pet.setLastFed(new Timestamp(new Date().getTime()));
+        itemService.setPreferences(pet);
+        
         petRepository.save(pet);
         assignPetSpecies(pet, petSpeciesId);
         assignPetUser(pet, username);
