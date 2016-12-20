@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 import wad.domain.User;
 import wad.repository.UserRepository;
 
-@Component
+//@Component
 public class JpaAuthenticationProvider implements AuthenticationProvider {
 
     @Autowired
@@ -38,8 +38,12 @@ public class JpaAuthenticationProvider implements AuthenticationProvider {
 //        }
 
         List<GrantedAuthority> grantedAuths = new ArrayList<>();
-        grantedAuths.add(new SimpleGrantedAuthority("USER"));
-
+        for (String authority : user.getAuthorities()) {
+            System.out.println(new SimpleGrantedAuthority(authority));
+            grantedAuths.add(new SimpleGrantedAuthority(authority));
+        }
+//        grantedAuths.add(new SimpleGrantedAuthority("USER"));
+        
         return new UsernamePasswordAuthenticationToken(user.getUsername(), password, grantedAuths);
     }
 

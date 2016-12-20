@@ -9,10 +9,10 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import wad.auth.JpaAuthenticationProvider;
+//import wad.auth.JpaAuthenticationProvider;
+import wad.service.CustomUserDetailsService;
 
 @Configuration
 @EnableWebSecurity
@@ -20,7 +20,7 @@ import wad.auth.JpaAuthenticationProvider;
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private UserDetailsService userDetailsService;
+    private CustomUserDetailsService userDetailsService;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -28,9 +28,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.headers().frameOptions().sameOrigin();
         
         http.authorizeRequests()
-                .antMatchers("/signup").permitAll()
-                .antMatchers("/login").permitAll()
-                .antMatchers("/h2-console/*").permitAll()
+                .antMatchers("/signup", "/login", "/h2-console/*").permitAll()
                 .anyRequest().authenticated();
         http.formLogin().loginPage("/login")
                 .permitAll();
@@ -46,15 +44,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
     
-    @Configuration
-    protected static class AuthenticationConfiguration extends GlobalAuthenticationConfigurerAdapter {
-
-        @Autowired
-        private JpaAuthenticationProvider jpaAuthenticationProvider;
-
-        @Override
-        public void init(AuthenticationManagerBuilder auth) throws Exception {
-            auth.authenticationProvider(jpaAuthenticationProvider);
-        }
-    }
+//    @Configuration
+//    protected static class AuthenticationConfiguration extends GlobalAuthenticationConfigurerAdapter {
+//
+//        @Autowired
+//        private JpaAuthenticationProvider jpaAuthenticationProvider;
+//
+//        @Override
+//        public void init(AuthenticationManagerBuilder auth) throws Exception {
+//            auth.authenticationProvider(jpaAuthenticationProvider);
+//        }
+//    }
 }

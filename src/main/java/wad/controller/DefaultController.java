@@ -39,7 +39,7 @@ public class DefaultController {
         user.setUsername("user");
         user.setEmail("user@gmail.com");
         user.setAuthorities(Arrays.asList("USER"));
-        user.setPassword(passwordEncoder.encode("user"));
+        user.setPassword("user");
 
         user = userDetailsRepository.save(user);
         
@@ -47,9 +47,17 @@ public class DefaultController {
         user2.setUsername("foo");
         user2.setEmail("foobar@gmail.com");
         user2.setAuthorities(Arrays.asList("ADMIN", "USER"));
-        user2.setPassword(passwordEncoder.encode("bar"));
+        user2.setPassword("bar");
  
         user2 = userDetailsRepository.save(user2);
+        
+        User user3 = new User();
+        user3.setUsername("apu");
+        user3.setEmail("apu@gmail.com");
+        user3.setAuthorities(Arrays.asList("USER"));
+        user3.setPassword("user");
+
+        user3 = userDetailsRepository.save(user3);
         
         PetSpecies petSpecies = new PetSpecies();
         petSpecies.setName("Bunny");

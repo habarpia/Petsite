@@ -27,7 +27,7 @@ public class User extends AbstractPersistable<Long>  {
     @Column(unique = true)
     private String email;
     
-    @ElementCollection()
+    @ElementCollection
     private List<String> authorities;
     
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
