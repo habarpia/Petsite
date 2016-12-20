@@ -131,13 +131,13 @@ public class PetServiceTest {
     @Test
     public void kaikkiOmistajanLemmikitPalautetaan(){
         User user = new User();
-        user.setUsername("correctOwner");
-        user.setEmail("owner@owner.com");
+        user.setUsername("correctOwner1");
+        user.setEmail("owner1@owner.com");
         user.setPassword("password");
         
         User otherUser = new User();
-        otherUser.setUsername("otherOwner");
-        otherUser.setEmail("other@other.com");
+        otherUser.setUsername("otherOwner2");
+        otherUser.setEmail("other2@other.com");
         otherUser.setPassword("password");
         
         PetSpecies petSpecies = new PetSpecies();
@@ -150,9 +150,9 @@ public class PetServiceTest {
         Pet pet = new Pet();
         pet.setName("Pupuna");
         Pet pet2 = new Pet();
-        pet.setName("Puputti");
+        pet2.setName("Puputti");
         Pet pet3 = new Pet();
-        pet.setName("Väiski");
+        pet3.setName("Väiski");
         
         petService.save(pet, petSpecies.getId(), user.getUsername());
         petService.save(pet2, petSpecies.getId(), user.getUsername());

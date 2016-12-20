@@ -46,7 +46,7 @@ public class DefaultController {
         User user2 = new User();
         user2.setUsername("foo");
         user2.setEmail("foobar@gmail.com");
-        user2.setAuthorities(Arrays.asList("USER","ADMIN"));
+        user2.setAuthorities(Arrays.asList("ADMIN", "USER"));
         user2.setPassword(passwordEncoder.encode("bar"));
  
         user2 = userDetailsRepository.save(user2);

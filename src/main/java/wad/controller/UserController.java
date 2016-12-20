@@ -1,5 +1,6 @@
 package wad.controller;
 
+import java.util.Arrays;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -63,7 +64,8 @@ public class UserController {
             return "signup";
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.addAuthority("USER");
+        //user.addAuthority("ADMIN");
+        user.setAuthorities(Arrays.asList("ADMIN"));
         userRepository.save(user);
         return "redirect:/login";
     }

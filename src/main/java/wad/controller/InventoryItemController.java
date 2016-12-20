@@ -39,7 +39,7 @@ public class InventoryItemController {
         return "inventory";
     }
     
-    @RequestMapping(value = "/itemGet", method = RequestMethod.POST)
+    @RequestMapping(value = "/obtainItem", method = RequestMethod.POST)
     public String getRandomItems(RedirectAttributes redirectAttrs) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String actiontext = itemService.getRandomItems(auth.getName());

@@ -6,10 +6,14 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.ManyToMany;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 @Entity
 public class Pet extends AbstractPersistable<Long> {
+    @NotBlank
+    @Length(min = 1, max = 20)
     private String name;
     
     @ManyToOne

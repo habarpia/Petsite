@@ -1,10 +1,14 @@
 package wad.controller;
 
+import java.util.Collection;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,8 +37,17 @@ public class PetController {
     private PetService petService;
     
     @RequestMapping(value = "/pets", method = RequestMethod.GET)
-    public String list(Model model) {
+    public String list(Model model, @ModelAttribute Pet pet) {
+        
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        
+        
+        Collection<SimpleGrantedAuthority> authorities = (Collection<SimpleGrantedAuthority>)    SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+        System.out.println("Authorities for user ... " + auth.getName());
+        for (SimpleGrantedAuthority authority : authorities) {
+            System.out.println(authority.getAuthority());
+        }
+        
         
         model.addAttribute("pets", petService.getPetsByOwner(auth.getName()));
         model.addAttribute("allPetSpecies", petSpeciesRepository.findAll());
@@ -43,9 +56,13 @@ public class PetController {
     }
 
     @RequestMapping(value = "/pets", method = RequestMethod.POST)
-    public String create(@ModelAttribute Pet pet, @RequestParam(value = "petSpeciesId") Long petSpeciesId) {
+    public String create(@Valid @ModelAttribute Pet pet, BindingResult bindingResult, @RequestParam(value = "petSpeciesId") Long petSpeciesId) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         
+        if(bindingResult.hasErrors()) {
+            return "pets";
+        }
+
         petService.save(pet, petSpeciesId, auth.getName());        
         return "redirect:/pets";
     }

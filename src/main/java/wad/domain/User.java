@@ -105,6 +105,10 @@ public class User extends AbstractPersistable<Long>  {
     }
 
     public List<InventoryItem> getItems() {
+        if(this.items == null) {
+            this.items = new ArrayList<>();
+        }
+        
         return items;
     }
 

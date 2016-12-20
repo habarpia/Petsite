@@ -10,9 +10,9 @@
         </header>
         
         <h2><span th:text="${user.username}">name</span></h2>
-        <h2><span th:text="${user.authorities}">authority</span></h2>
         
-        <div sec:authorize="hasAuthority('USER')"><li><span th:text="${user.authorities}">authority</span></li></div>
+        Authorities:
+        <span th:text="${user.authorities}">authorities</span>
         
         <h3>Pets</h3>
 

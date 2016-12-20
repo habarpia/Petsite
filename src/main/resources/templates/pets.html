@@ -19,8 +19,9 @@
         
         <div>
             Create a pet:<br/>
-            <form th:action="@{/pets}" method="POST">
+            <form th:action="@{/pets}" th:object="${pet}" method="POST">
                 Name: <input type="text" name="name" id="name"/><br/>
+               <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name error message</span>
                 Species: 
                 <select name="petSpeciesId">
                     <option th:each="petSpecies : ${allPetSpecies}" th:value="${petSpecies.id}" th:text="${petSpecies.name}"></option>

@@ -8,36 +8,16 @@
         <header th:replace="fragments/header :: header">
             <p>header with links etc</p>
         </header>
-        
-      <!--
-        <div>
-            <h2>Sign in</h2>
-            <form method="POST" th:action="@{/login}">
-                <div>
-                    <span>
-                        <input type="text" name="name" placeholder="Username" />
-                    </span>
-                    <span>
-                        <input type="text" name="password" placeholder="password" /> 
-                    </span>
-                </div>
-                <input type="submit" value="sign in" />
 
-                
-            </form>
-        </div>
-      -->
         <div>
             Login:<br/>
             <form th:action="@{/login}" th:object="${user}"  method="POST">
                 <table>
                     <tr>
-                        <td>Username: </td>
                         <td><input type="text" th:field="*{username}" placeholder="Username" /></td>
                         <td th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username error message</td> 
                     </tr>
                     <tr>
-                        <td>Password: </td>
                         <td><input type="password" th:field="*{password}"  placeholder="password" /></td>
                         <td th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password error message</td> 
                     </tr>
