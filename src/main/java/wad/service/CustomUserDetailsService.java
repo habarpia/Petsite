@@ -21,10 +21,10 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        System.out.println("Yritän kirjautua tunnuksella " + username);
+        //System.out.println("Yritän kirjautua tunnuksella " + username);
         
         User user = userRepository.findByUsername(username);
-        System.out.println("Löytyykö? " + user);
+        //System.out.println("Löytyykö? " + user);
         if (user == null) {
             throw new UsernameNotFoundException("No such user: " + username);
         }

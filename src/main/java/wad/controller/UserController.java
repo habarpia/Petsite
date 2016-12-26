@@ -3,8 +3,8 @@ package wad.controller;
 import java.util.Arrays;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+//import org.springframework.security.core.Authentication;
+//import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -63,9 +63,7 @@ public class UserController {
         if(bindingResult.hasErrors()) {
             return "signup";
         }
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        //user.addAuthority("ADMIN");
-        user.setAuthorities(Arrays.asList("ADMIN"));
+        user.setAuthorities(Arrays.asList("USER"));
         userRepository.save(user);
         return "redirect:/login";
     }

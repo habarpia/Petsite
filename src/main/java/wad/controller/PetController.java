@@ -42,11 +42,11 @@ public class PetController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         
         
-        Collection<SimpleGrantedAuthority> authorities = (Collection<SimpleGrantedAuthority>)    SecurityContextHolder.getContext().getAuthentication().getAuthorities();
-        System.out.println("Authorities for user ... " + auth.getName());
-        for (SimpleGrantedAuthority authority : authorities) {
-            System.out.println(authority.getAuthority());
-        }
+//        Collection<SimpleGrantedAuthority> authorities = (Collection<SimpleGrantedAuthority>)    SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+//        System.out.println("Authorities for user ... " + auth.getName());
+//        for (SimpleGrantedAuthority authority : authorities) {
+//            System.out.println(authority.getAuthority());
+//        }
         
         
         model.addAttribute("pets", petService.getPetsByOwner(auth.getName()));
