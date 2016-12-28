@@ -1,7 +1,7 @@
 package wad.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
+//import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -21,7 +21,7 @@ public class PetSpeciesController {
         return "petSpecies";
     }
 
-    @Secured("ADMIN")
+    //@Secured("ADMIN")
     @RequestMapping(value = "/petSpecies", method = RequestMethod.POST)
     public String create(@ModelAttribute PetSpecies petSpecies) {
         petSpeciesRepository.save(petSpecies);

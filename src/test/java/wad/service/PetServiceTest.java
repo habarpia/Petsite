@@ -12,6 +12,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 import wad.domain.InventoryItem;
 import wad.domain.Item;
 import wad.domain.Pet;
@@ -44,8 +45,8 @@ public class PetServiceTest {
     @Test
     public void lemmikkiTallentuu() {
         User user = new User();
-        user.setUsername("username");
-        user.setEmail("example@gmail.com");
+        user.setUsername("usernametest");
+        user.setEmail("example@maili.com");
         user.setPassword("password");
         
         PetSpecies petSpecies = new PetSpecies();
@@ -164,37 +165,47 @@ public class PetServiceTest {
         assertFalse(retrieved.contains(petRepository.findOne(pet3.getId())));
     }  
 
-//@Test
-//public void lemmikinVoiRuokkia(){
-//    User user = new User();
-//    user.setUsername("ruokkija");
-//    user.setEmail("ruokkija@maili.com");
-//    user.setPassword("password");
-//    
-//    PetSpecies petSpecies = new PetSpecies();
-//    petSpecies.setName("pupu");
-//    
-//    Item item = new Item();
-//    item.setName("Päärynä");
-//    InventoryItem inventoryItem = new InventoryItem();
-//    inventoryItem.setItem(item);
-//    inventoryItem.setUser(user);
-//    user.addItem(inventoryItem);
-//    item.addItem(inventoryItem);
-//
-//    petSpeciesRepository.save(petSpecies);
-//    userRepository.save(user);
-//    itemRepository.save(item);
-//    inventoryItemRepository.save(inventoryItem);
-//    
-//    Pet pet = new Pet();
-//    pet.setName("Pupuna");
-//    
-//    petService.save(pet, petSpecies.getId(), user.getUsername());
-//    petService.feedPet(pet.getId(), user.getUsername(), inventoryItem.getId());
-//    
-//    Pet retrieved = petRepository.findOne(pet.getId());
-//    assertEquals(retrieved.getFullness(), 1);
-//    assertEquals(retrieved.getHappiness(), 1);
-//}
+@Test
+@Transactional
+public void lemmikinVoiRuokkia(){
+    User user = new User();
+    user.setUsername("ruokkija");
+    user.setEmail("ruokkija@maili.com");
+    user.setPassword("password");
+    
+    PetSpecies petSpecies = new PetSpecies();
+    petSpecies.setName("pupu");
+    
+    Item item = new Item();
+    item.setName("Päärynä");
+    InventoryItem inventoryItem = new InventoryItem();
+    inventoryItem.setItem(item);
+    inventoryItem.setUser(user);
+    user.addItem(inventoryItem);
+    item.addItem(inventoryItem);
+    
+    Item item2 = new Item();
+    item2.setName("Omena");
+    Item item3 = new Item();
+    item3.setName("Banaani");
+    Item item4 = new Item();
+    item4.setName("Kiivi");
+
+    petSpeciesRepository.save(petSpecies);
+    userRepository.save(user);
+    itemRepository.save(item);
+    itemRepository.save(item2);
+    itemRepository.save(item3);
+    itemRepository.save(item4);
+    inventoryItemRepository.save(inventoryItem);
+    
+    Pet pet = new Pet();
+    pet.setName("Pupuna");
+    
+    petService.save(pet, petSpecies.getId(), user.getUsername());
+    petService.feedPet(pet.getId(), user.getUsername(), inventoryItem.getId());
+    
+    Pet retrieved = petRepository.findOne(pet.getId());
+    assertEquals(retrieved.getFullness(), 1);
+}
 }
