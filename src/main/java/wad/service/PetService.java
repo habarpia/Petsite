@@ -7,14 +7,12 @@ import java.util.Objects;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import wad.domain.Item;
 import wad.domain.Pet;
 import wad.domain.PetSpecies;
 import wad.domain.User;
 import wad.repository.PetRepository;
 import wad.repository.UserRepository;
 import wad.repository.PetSpeciesRepository;
-import wad.repository.InventoryItemRepository;
 
 @Service
 public class PetService {
@@ -24,8 +22,6 @@ public class PetService {
     private PetSpeciesRepository petSpeciesRepository;
     @Autowired
     private PetRepository petRepository;
-    @Autowired
-    private InventoryItemRepository inventoryItemRepository;
     @Autowired
     private ItemService itemService;
     
@@ -76,7 +72,7 @@ public class PetService {
         return user.getPets();
     }
     
-    public String feedPet(Long petId, String username, Long itemId){
+    public String feedPet(Long petId, String username, Long inventoryItemId){
         Pet pet = petRepository.findOne(petId);
         if(pet == null){
             return "Pet doesn't exist!";
@@ -90,11 +86,11 @@ public class PetService {
         if(pet.getFullness() >= 10){
             return pet.getName() + " is already totally full!";
         }
-        String message = setHappiness(pet, inventoryItemRepository.findOne(itemId).getItem().getId());
+        String message = setHappiness(pet, inventoryItemId);
         pet.setFullness(pet.getFullness() + 1);
         pet.setLastFed(new Timestamp(new Date().getTime()));
         petRepository.save(pet);
-        itemService.removeInventoryItem(itemId);
+        itemService.removeInventoryItem(inventoryItemId);
         return "You fed " + pet.getName() + "! " + message;
         
     }
@@ -114,7 +110,8 @@ public class PetService {
         return fullness;
     }
     
-    private String setHappiness(Pet pet, Long itemId){
+    private String setHappiness(Pet pet, Long inventoryItemId){
+        long itemId = itemService.getItemIdForInventoryItem(inventoryItemId);
         int changeInHappiness = 1;
         String message = "";
         

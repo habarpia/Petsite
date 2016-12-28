@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.List;
-import java.util.Random;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -28,7 +26,6 @@ public class ItemService {
     InventoryItemRepository inventoryItemRepository;
     @Autowired
     UserRepository userRepository;
-    private Random randomGenerator;
     
     @Transactional
     public String getRandomItems(String username){
@@ -89,5 +86,8 @@ public class ItemService {
     
     public Item getItem(Long id){
         return itemRepository.findOne(id);
+    }
+    public long getItemIdForInventoryItem(long inventoryItemId){
+        return inventoryItemRepository.findOne(inventoryItemId).getItem().getId();
     }
 }
