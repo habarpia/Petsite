@@ -47,4 +47,38 @@ public class ItemServiceTest {
         assertTrue(retrieved.getItems().size() >= 0);
         assertTrue(retrieved.getItems().get(0).getItem().getName() != null);
     }
+    
+    @Test
+    @Transactional
+    public void notPossibleToGetMoreThan20ItemsAtATime(){
+        User user = new User();
+        user.setUsername("username2");
+        user.setEmail("example2@gmail.com");
+        user.setPassword("password");
+        user = userRepository.save(user);
+        
+        Item item = new Item();
+        item.setName("Banana");
+        itemRepository.save(item);
+        Item item2 = new Item();
+        item2.setName("Cake");
+        itemRepository.save(item2);
+        
+        for(int i=0; i<20; i++){
+            itemService.getRandomItems(user.getUsername());
+        }
+        
+        User retrieved = userRepository.findByUsername(user.getUsername());
+        assertTrue(retrieved.getItems().size() == 20);
+        
+        itemService.getRandomItems(user.getUsername());
+        assertTrue(retrieved.getItems().size() == 20);
+        
+        retrieved.removeItem(retrieved.getItems().get(0));
+        retrieved = userRepository.save(retrieved);
+        
+        assertTrue(retrieved.getItems().size() == 19);
+        itemService.getRandomItems(user.getUsername());
+        assertTrue(retrieved.getItems().size() == 20);
+    }
 }

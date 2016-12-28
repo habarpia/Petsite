@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import wad.domain.InventoryItem;
@@ -34,7 +36,7 @@ public class ItemService {
         if(user.getItems().size() >= 20){
             return "Your inventory is already full!";
         }
-        Item item = getRandomItem();
+        Item item = findRandomItemFromDb();
         
         InventoryItem inventoryItem = new InventoryItem();
         inventoryItem.setItem(item);
@@ -62,19 +64,16 @@ public class ItemService {
         item = itemRepository.save(item);
     }
     
-    private Item getRandomItem(){
-        if(randomGenerator ==null){
-            randomGenerator = new Random();
-        }
-        List<Item> items = itemRepository.findAll();
-        return items.get(randomGenerator.nextInt(items.size()));
+    private Item findRandomItemFromDb(){
+        Pageable pageable = new PageRequest(0, 1);
+        return itemRepository.findRandomItem(pageable).getContent().get(0);
     }
     
     //lemmikille 2 lempiruokaa ja 2 inhokkiruokaa
     public void setPreferences(Pet pet){
         Set<Item> generatedSet = new HashSet<Item>();
         while(generatedSet.size() < 4){
-            generatedSet.add(getRandomItem());
+            generatedSet.add(findRandomItemFromDb());
         }
         Object[] generatedArray = generatedSet.toArray();
         ArrayList<Object> generatedArrayList = new ArrayList<Object>(Arrays.asList(generatedArray));

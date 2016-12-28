@@ -53,6 +53,8 @@ public class UserTest extends FluentTest{
         assertEquals("Petsite", title());
         webDriver.findElement(By.linkText("Users")).click();
         assertTrue(pageSource().contains("NewUser"));
+        assertTrue(userRepository.findByEmail("example@gmail.com") != null);
+        assertTrue(userRepository.findByUsername("NewUser") != null);
     }   
     
     @Test
