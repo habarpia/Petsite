@@ -69,7 +69,9 @@ public class PetController {
         Pet pet = petRepository.getOne(Long.valueOf(id));
         model.addAttribute("items", inventoryItemRepository.findByUser(user));
         model.addAttribute("pet", pet);
-        model.addAttribute("imageId", pet.getPetSpecies().getImageN().getOriginal().getId());
+        if(!model.containsAttribute("imageId")){
+            model.addAttribute("imageId", pet.getPetSpecies().getImageN().getOriginal().getId());
+        }
         return "pet";
     }
     
@@ -86,15 +88,27 @@ public class PetController {
     @RequestMapping(value = "feedpet/{id}", method = RequestMethod.POST)
     public String feed(Model model, @PathVariable String id, @RequestParam(value = "itemId") String itemId, RedirectAttributes redirectAttrs) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Pet pet = petRepository.findOne(Long.valueOf(id));
         String message = petService.checkIfPetCanBeFed(Long.valueOf(id), auth.getName(), Long.valueOf(itemId));
-        if(message != ""){
+        if(!"".equals(message)){
             redirectAttrs.addFlashAttribute("message", message);
             return "redirect:/pets/{id}";
         }
-        message = petService.feedPet(Long.valueOf(id), auth.getName(), Long.valueOf(itemId));
+        message = "You fed " + pet.getName() + "! " + petService.feedPet(Long.valueOf(id), auth.getName(), Long.valueOf(itemId));
 
         redirectAttrs.addFlashAttribute("message", message);
+        redirectAttrs.addFlashAttribute("imageId", getImageIdAfterFeeding(pet, message));
         return "redirect:/pets/{id}";
     }
     
+    private String getImageIdAfterFeeding(Pet pet, String message){
+        if(message.equals("You fed " + pet.getName() + "! " +"It loved the treat!")){
+            return pet.getPetSpecies().getImageH().getOriginal().getId();
+        }
+        else if(message.equals("You fed " + pet.getName() + "! " +"Looks like it didn't like the food...")){
+            return pet.getPetSpecies().getImageA().getOriginal().getId();
+        }
+        
+        return pet.getPetSpecies().getImageN().getOriginal().getId();
+    }
 }

@@ -106,24 +106,12 @@ public class PetService {
     
     public String feedPet(Long petId, String username, Long inventoryItemId){
         Pet pet = petRepository.findOne(petId);
-//        if(pet == null){
-//            return "Pet doesn't exist!";
-//        }
-//        User loggedInUser = userRepository.findByUsername(username);
-//        
-//        if(!Objects.equals(pet.getUser().getId(), loggedInUser.getId())){
-//            return "You can only feed your own pet!";
-//        }
-//        pet.setFullness(calculateHunger(pet));
-//        if(pet.getFullness() >= 10){
-//            return pet.getName() + " is already totally full!";
-//        }
         String message = setHappiness(pet, inventoryItemId);
         pet.setFullness(pet.getFullness() + 1);
         pet.setLastFed(new Timestamp(new Date().getTime()));
         petRepository.save(pet);
         itemService.removeInventoryItem(inventoryItemId);
-        return "You fed " + pet.getName() + "! " + message;
+        return message;
         
     }
     
