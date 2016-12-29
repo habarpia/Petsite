@@ -32,8 +32,8 @@ public class PetSpeciesController {
     @RequestMapping(value = "/petSpecies", method = RequestMethod.POST)
     public String create(@ModelAttribute PetSpecies petSpecies, 
             @RequestParam("neutralImage") MultipartFile neutralImage,
-            @RequestParam("neutralImage") MultipartFile angryImage,
-            @RequestParam("neutralImage") MultipartFile happyImage) throws IOException{
+            @RequestParam("angryImage") MultipartFile angryImage,
+            @RequestParam("happyImage") MultipartFile happyImage) throws IOException{
         Image image = new Image();
         image.setMetadata(petSpecies.getName() + " neutral image");
         petSpecies.setImageN(image);

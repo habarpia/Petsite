@@ -11,24 +11,27 @@
         
         <h2>All pet species</h2>
 
-        
-        <th:block th:each="petSpecies : ${allPetSpecies}">
+        <table>
             <tr>
+                <th>Name</th>
+                <th>Neutral</th>
+                <th>Angry</th>
+                <th>Happy</th>
+            </tr>
+            <tr th:each="petSpecies : ${allPetSpecies}">
                 <td><span th:text="${petSpecies.name}">name</span></td> 
                 <td>
                     <img th:if="${petSpecies.imageN != null}" th:src="@{/images/qr/{id}(id=${petSpecies.imageN.original.id})}"/>
-                    <br><span th:if="${petSpecies.imageN != null}" th:text="${petSpecies.imageN.original.id}">text</span></br>
                 </td>
                 <td>
                     <img th:if="${petSpecies.imageA != null}" th:src="@{/images/qr/{id}(id=${petSpecies.imageA.original.id})}"/>
-                    <br><span th:if="${petSpecies.imageA != null}" th:text="${petSpecies.imageA.original.id}">text</span></br>
                 </td>
                 <td>
                     <img th:if="${petSpecies.imageH != null}" th:src="@{/images/qr/{id}(id=${petSpecies.imageH.original.id})}"/>
-                    <br><span th:if="${petSpecies.imageH != null}" th:text="${petSpecies.imageH.original.id}">text</span></br>
                 </td>
             </tr>
-        </th:block>
+        </table>
+        
     
         <div>
             Add a pet species:<br/>

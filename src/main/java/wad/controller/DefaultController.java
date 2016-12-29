@@ -51,18 +51,6 @@ public class DefaultController {
  
         user2 = userDetailsRepository.save(user2);
         
-        User user3 = new User();
-        user3.setUsername("apu");
-        user3.setEmail("apu@gmail.com");
-        user3.setAuthorities(Arrays.asList("USER"));
-        user3.setPassword("user");
-
-        user3 = userDetailsRepository.save(user3);
-        
-        PetSpecies petSpecies = new PetSpecies();
-        petSpecies.setName("Bunny");
-        petSpecies = petSpeciesRepository.save(petSpecies);
-        
         Item item = new Item();
         item.setName("Apple");
         item = itemRepository.save(item);
