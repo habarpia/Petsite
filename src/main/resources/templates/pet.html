@@ -12,21 +12,9 @@
         <h2><span th:text="${pet.name}">name</span></h2>
 
         <h3><span th:text="${pet.petSpecies.name}">pet species</span></h3>
-<!--        
-        Liked items:
-        <ul>
-            <li th:each="item : ${pet.likedItems}">
-                <span th:text="${item.name}">liked item</span>
-            </li>
-        </ul>
-        
-        Disliked items:
-        <ul>
-            <li th:each="item : ${pet.dislikedItems}">
-                <span th:text="${item.name}">disliked item</span>
-            </li>
-        </ul>
--->        
+
+        <img th:src="@{/images/qr/{id}(id=${imageId})}"/>
+       
         <h4><span th:text="${message}">message</span></h4>
         
         

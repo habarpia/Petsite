@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 @Entity
@@ -13,6 +14,9 @@ public class PetSpecies extends AbstractPersistable<Long> {
     
     @OneToMany(mappedBy = "petSpecies", fetch = FetchType.EAGER)
     private List<Pet> pets;
+    
+    @OneToOne
+    private Image image;
 
     public String getName() {
         return name;
@@ -41,6 +45,14 @@ public class PetSpecies extends AbstractPersistable<Long> {
         if(this.pets != null){
             pets.remove(pet);
         }
+    }
+
+    public Image getImage() {
+        return image;
+    }
+
+    public void setImage(Image image) {
+        this.image = image;
     }
     
     

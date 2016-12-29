@@ -19,8 +19,10 @@
         
         <div>
             Add a pet species:<br/>
-            <form th:action="@{/petSpecies}" method="POST">
+            <form th:action="@{/petSpecies}" method="POST" enctype="multipart/form-data">
                 Name: <input type="text" name="name" id="name"/><br/>
+                <label for="metadata">Image metadata</label><input type="text" name="metadata" id="metadata"/><br/>
+                <label for="file">File</label><input type="file" name="file" id="file"/><br/>
                 <input type="submit"/>            
             </form>
         </div>

@@ -69,6 +69,7 @@ public class PetController {
         Pet pet = petRepository.getOne(Long.valueOf(id));
         model.addAttribute("items", inventoryItemRepository.findByUser(user));
         model.addAttribute("pet", pet);
+        model.addAttribute("imageId", pet.getPetSpecies().getImage().getOriginal().getId());
         return "pet";
     }
     
