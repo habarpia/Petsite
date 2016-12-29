@@ -7,14 +7,12 @@
     <body>
 
         <header th:fragment="header">
-            <ul>
-               <div sec:authorize="hasAuthority('USER')"><li><a th:href="@{/}">Index</a></li></div>
-               <div sec:authorize="hasAuthority('USER')"><li><a th:href="@{/users}">Users</a></li></div>
-               <div sec:authorize="hasAuthority('USER')"><li><a th:href="@{/pets}">Pets</a></li></div>
-               <div sec:authorize="hasAuthority('USER')"><li><a th:href="@{/inventory}">Inventory</a></li></div>
-               <div sec:authorize="hasAuthority('ADMIN')"><li><a th:href="@{/petSpecies}">Pet species</a></li></div>
-               <div sec:authorize="hasAuthority('USER')"><li><form method="post" action="#" th:action="@{/logout}"><input type="submit" name="logout" value="Logout"/></form></li></div>
-          </ul>
+               <span sec:authorize="hasAuthority('USER')"><a th:href="@{/}">Index</a> |</span>
+               <span sec:authorize="hasAuthority('USER')"><a th:href="@{/users}">Users</a> |</span>
+               <span sec:authorize="hasAuthority('USER')"><a th:href="@{/pets}">Pets</a> |</span>
+               <span sec:authorize="hasAuthority('USER')"><a th:href="@{/inventory}">Inventory</a> |</span>
+               <span sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/petSpecies}">Pet species</a></span>
+               <span sec:authorize="hasAuthority('USER')"><form method="post" action="#" th:action="@{/logout}"><input type="submit" name="logout" value="Logout"/></form></span>
         </header>
 
     </body>
