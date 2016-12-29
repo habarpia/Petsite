@@ -86,7 +86,12 @@ public class PetController {
     @RequestMapping(value = "feedpet/{id}", method = RequestMethod.POST)
     public String feed(Model model, @PathVariable String id, @RequestParam(value = "itemId") String itemId, RedirectAttributes redirectAttrs) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String message = petService.feedPet(Long.valueOf(id), auth.getName(), Long.valueOf(itemId));
+        String message = petService.checkIfPetCanBeFed(Long.valueOf(id), auth.getName(), Long.valueOf(itemId));
+        if(message != ""){
+            redirectAttrs.addFlashAttribute("message", message);
+            return "redirect:/pets/{id}";
+        }
+        message = petService.feedPet(Long.valueOf(id), auth.getName(), Long.valueOf(itemId));
 
         redirectAttrs.addFlashAttribute("message", message);
         return "redirect:/pets/{id}";

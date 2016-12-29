@@ -72,29 +72,6 @@ public class PetService {
         return user.getPets();
     }
     
-    public String feedPet(Long petId, String username, Long inventoryItemId){
-        Pet pet = petRepository.findOne(petId);
-        if(pet == null){
-            return "Pet doesn't exist!";
-        }
-        User loggedInUser = userRepository.findByUsername(username);
-        
-        if(!Objects.equals(pet.getUser().getId(), loggedInUser.getId())){
-            return "You can only feed your own pet!";
-        }
-        pet.setFullness(calculateHunger(pet));
-        if(pet.getFullness() >= 10){
-            return pet.getName() + " is already totally full!";
-        }
-        String message = setHappiness(pet, inventoryItemId);
-        pet.setFullness(pet.getFullness() + 1);
-        pet.setLastFed(new Timestamp(new Date().getTime()));
-        petRepository.save(pet);
-        itemService.removeInventoryItem(inventoryItemId);
-        return "You fed " + pet.getName() + "! " + message;
-        
-    }
-
     //kylläisyys laskee joka viides minuutti
     private int calculateHunger(Pet pet){
         Timestamp lastFed = pet.getLastFed();
@@ -108,6 +85,46 @@ public class PetService {
             fullness --;
         }
         return fullness;
+    }
+    
+    public String checkIfPetCanBeFed(Long petId, String username, Long inventoryItemId){
+        Pet pet = petRepository.findOne(petId);
+        if(pet == null){
+            return "Pet doesn't exist!";
+        }
+        User loggedInUser = userRepository.findByUsername(username);
+        
+        if(!Objects.equals(pet.getUser().getId(), loggedInUser.getId())){
+            return "You can only feed your own pet!";
+        }
+        pet.setFullness(calculateHunger(pet));
+        if(pet.getFullness() >= 10){
+            return pet.getName() + " is already totally full!";
+        }
+        return "";
+    }
+    
+    public String feedPet(Long petId, String username, Long inventoryItemId){
+        Pet pet = petRepository.findOne(petId);
+//        if(pet == null){
+//            return "Pet doesn't exist!";
+//        }
+//        User loggedInUser = userRepository.findByUsername(username);
+//        
+//        if(!Objects.equals(pet.getUser().getId(), loggedInUser.getId())){
+//            return "You can only feed your own pet!";
+//        }
+//        pet.setFullness(calculateHunger(pet));
+//        if(pet.getFullness() >= 10){
+//            return pet.getName() + " is already totally full!";
+//        }
+        String message = setHappiness(pet, inventoryItemId);
+        pet.setFullness(pet.getFullness() + 1);
+        pet.setLastFed(new Timestamp(new Date().getTime()));
+        petRepository.save(pet);
+        itemService.removeInventoryItem(inventoryItemId);
+        return "You fed " + pet.getName() + "! " + message;
+        
     }
     
     private String setHappiness(Pet pet, Long inventoryItemId){
