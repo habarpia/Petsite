@@ -32,12 +32,6 @@ public class ImageController {
     @Autowired
     private FileObjectRepository fileRepository;
 
-    @RequestMapping(method = RequestMethod.GET)
-    public String getImages(Model model) {
-        model.addAttribute("images", imageRepository.findAll());
-        return "index";
-    }
-
 
     @RequestMapping(method = RequestMethod.POST)
     public String addFile(
@@ -49,28 +43,11 @@ public class ImageController {
         imageService.add(image, file.getContentType(), file.getOriginalFilename(), file.getBytes());
         return "redirect:/images";
     }
-
-//    @RequestMapping(value = {"/thumbnails/{id}", "/originals/{id}"}, method = RequestMethod.GET)
-//    public ResponseEntity<byte[]> getImage2(
-//            @PathVariable String id) {
-//
-//        return createResponseEntity(fileRepository.findOne(id));
-//    }
-//
-//    private ResponseEntity<byte[]> createResponseEntity(FileObject fo) {
-//        final HttpHeaders headers = new HttpHeaders();
-//        headers.setContentType(MediaType.parseMediaType(fo.getContentType()));
-//        headers.setContentLength(fo.getContentLength());
-//        headers.setCacheControl("public");
-//        headers.setExpires(Long.MAX_VALUE);
-//
-//        return new ResponseEntity<>(fo.getContent(), headers, HttpStatus.CREATED);
-//    }
  
     @RequestMapping (value="/qr/{id}", method = RequestMethod.GET)
     public ResponseEntity<byte[]> getImage(@PathVariable String id) {
         byte[] bytes = fileRepository.findOne(id).getContent();
-
+        
         final HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.IMAGE_PNG);
 

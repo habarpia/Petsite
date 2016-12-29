@@ -11,18 +11,32 @@
         
         <h2>All pet species</h2>
 
-        <ul>
-            <li th:each="petSpecies : ${allPetSpecies}">
-                <span th:text="${petSpecies.name}">name</span> 
-            </li>
-        </ul>
         
+        <th:block th:each="petSpecies : ${allPetSpecies}">
+            <tr>
+                <td><span th:text="${petSpecies.name}">name</span></td> 
+                <td>
+                    <img th:if="${petSpecies.imageN != null}" th:src="@{/images/qr/{id}(id=${petSpecies.imageN.original.id})}"/>
+                    <br><span th:if="${petSpecies.imageN != null}" th:text="${petSpecies.imageN.original.id}">text</span></br>
+                </td>
+                <td>
+                    <img th:if="${petSpecies.imageA != null}" th:src="@{/images/qr/{id}(id=${petSpecies.imageA.original.id})}"/>
+                    <br><span th:if="${petSpecies.imageA != null}" th:text="${petSpecies.imageA.original.id}">text</span></br>
+                </td>
+                <td>
+                    <img th:if="${petSpecies.imageH != null}" th:src="@{/images/qr/{id}(id=${petSpecies.imageH.original.id})}"/>
+                    <br><span th:if="${petSpecies.imageH != null}" th:text="${petSpecies.imageH.original.id}">text</span></br>
+                </td>
+            </tr>
+        </th:block>
+    
         <div>
             Add a pet species:<br/>
             <form th:action="@{/petSpecies}" method="POST" enctype="multipart/form-data">
                 Name: <input type="text" name="name" id="name"/><br/>
-                <label for="metadata">Image metadata</label><input type="text" name="metadata" id="metadata"/><br/>
-                <label for="file">File</label><input type="file" name="file" id="file"/><br/>
+                <label for="neutralImage">Neutral image: </label><input type="file" name="neutralImage" id="neutralImage"/><br/>
+                <label for="angryImage">Angry image: </label><input type="file" name="angryImage" id="angryImage"/><br/>
+                <label for="happyImage">Happy image: </label><input type="file" name="happyImage" id="happyImage"/><br/>
                 <input type="submit"/>            
             </form>
         </div>

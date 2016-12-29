@@ -9,8 +9,5 @@ import wad.domain.Item;
 
 public interface ItemRepository  extends JpaRepository<Item, Long>{
     @Query("SELECT i FROM Item i order by RAND()")
-    List <Item> findTop1RandomItem();
-    
-    @Query("SELECT i FROM Item i order by RAND()")
     Page<Item> findRandomItem(Pageable pageable);
 }

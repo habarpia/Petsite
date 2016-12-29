@@ -31,13 +31,27 @@ public class PetSpeciesController {
     //@Secured("ADMIN")
     @RequestMapping(value = "/petSpecies", method = RequestMethod.POST)
     public String create(@ModelAttribute PetSpecies petSpecies, 
-            @RequestParam("metadata") String metadata,
-            @RequestParam("file") MultipartFile file) throws IOException{
+            @RequestParam("neutralImage") MultipartFile neutralImage,
+            @RequestParam("neutralImage") MultipartFile angryImage,
+            @RequestParam("neutralImage") MultipartFile happyImage) throws IOException{
         Image image = new Image();
-        image.setMetadata(metadata);
-        petSpecies.setImage(image);
+        image.setMetadata(petSpecies.getName() + " neutral image");
+        petSpecies.setImageN(image);
 
-        imageService.add(image, file.getContentType(), file.getOriginalFilename(), file.getBytes());
+        imageService.add(image, neutralImage.getContentType(), neutralImage.getOriginalFilename(), neutralImage.getBytes());
+        
+        image = new Image();
+        image.setMetadata(petSpecies.getName() + " angry image");
+        petSpecies.setImageA(image);
+
+        imageService.add(image, angryImage.getContentType(), angryImage.getOriginalFilename(), angryImage.getBytes());
+        
+        image = new Image();
+        image.setMetadata(petSpecies.getName() + " happy image");
+        petSpecies.setImageH(image);
+
+        imageService.add(image, happyImage.getContentType(), happyImage.getOriginalFilename(), happyImage.getBytes());
+        
         petSpeciesRepository.save(petSpecies);
         
         return "redirect:/petSpecies";

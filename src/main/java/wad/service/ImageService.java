@@ -19,9 +19,6 @@ public class ImageService {
     @Autowired
     private ImageRepository imageRepository;
 
-    //@Autowired
-    //private Thumbnailer thumbnailer;
-
     @Async
     public void add(Image image, String mediaType, String filename, byte[] data) throws IOException {
         FileObject original = new FileObject();
@@ -32,17 +29,7 @@ public class ImageService {
 
         original = fileObjectRepository.save(original);
 
-        //FileObject thumbnail = null;
-        //try {
-        ///    thumbnailer.process(data, filename);
-        //    thumbnail = fileObjectRepository.save(thumbnail);
-        //} catch (Throwable t) {
-            // not a nice way to handle this -- we're doing this
-            // to simplify testing of the exercise
-        //}
-
         image.setOriginal(original);
-        //image.setThumbnail(thumbnail);
 
         imageRepository.save(image);
     }
